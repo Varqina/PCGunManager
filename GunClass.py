@@ -1,17 +1,19 @@
 class GunClass:
-    def __init__(self, factory, model):
-        self.factory = factory
-        self.model = model
-
     factory = None
     model = None
     bullets_used_total = 0
     buy_date = None
-    buy_price = None
+    buy_price = 0
     brand_new = None
     last_cleaning = None
+    gun_number = None
 
     shooting = {}  # key - date of training/shooting, value = place, ammo used
+
+    def __init__(self, factory, model, gun_number):
+        self.factory = factory
+        self.model = model
+        self.gun_number = gun_number
 
     def add_shooting(self, shooting_date, shooting_place, bullets_amount):
         self.shooting[shooting_date] = (shooting_place, bullets_amount)
@@ -21,8 +23,18 @@ class GunClass:
         self.bullets_used_total -= self.shooting.get(shooting_date).__getitem__(1)
         del self.shooting[shooting_date]
 
+    def get_printed_gun_property_list(self):
+        print("Factory: " + self.get_factory())
+        print("Model: " + self.get_model())
+        print("Bullets used: " + str(self.get_bullets_used_total()))
+        print("Buy Date: " + str(self.get_buy_date()))
+        print("Buy price: " + str(self.get_buy_price()))
+        print("Brand new: " + str(self.get_brand_new()))
+        print("Date last cleaning: " + str(self.get_last_cleaning()))
+        print("Gun's number: " + self.get_gun_number())
+
     def __str__(self):
-        return "Gun's factory: %s, model: %s " % (self.factory, self.model)
+        return "Gun: %s, %s " % (self.factory, self.model)
 
     def get_factory(self):
         return self.factory
@@ -45,6 +57,9 @@ class GunClass:
     def get_last_cleaning(self):
         return self.last_cleaning
 
+    def get_gun_number(self):
+        return self.gun_number
+
     def set_factory(self, factory):
         self.factory = factory
 
@@ -65,3 +80,6 @@ class GunClass:
 
     def set_last_cleaning(self, last_cleaning):
         self.last_cleaning = last_cleaning
+
+    def set_gun_number(self, gun_number):
+        self.gun_number = gun_number
