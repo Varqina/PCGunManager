@@ -8,13 +8,13 @@ GunManager = GunManagerClass()
 while True:
     print(SetOfStringsClass.main_menu_loop)
     choice = int(input(SetOfStringsClass.choice_request))
-    if choice == 1: #add
+    if choice == 1:
         GunManager.add_gun()
-    if choice == 2: #edit
+    if choice == 2:
         GunManager.edit_gun()
-    if choice == 3: #remove
+    if choice == 3:
         GunManager.remove_gun()
-    if choice == 4: #Display
+    if choice == 4:
         GunManager.display_all()
     if choice == 5:
         print(SetOfStringsClass.shooting_menu)

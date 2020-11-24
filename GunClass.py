@@ -8,7 +8,7 @@ class GunClass:
     last_cleaning = None
     gun_number = None
 
-    shooting = {}  # key - date of training/shooting, value = place, ammo used
+    shooting = {}  # key - int, value = [date of training/shooting, place, ammo used]
 
     def __init__(self, factory, model, gun_number):
         self.factory = factory
@@ -16,12 +16,16 @@ class GunClass:
         self.gun_number = gun_number
 
     def add_shooting(self, shooting_date, shooting_place, bullets_amount):
-        self.shooting[shooting_date] = (shooting_place, bullets_amount)
+        self.shooting[self.get_latest_used_key() + 1] = (shooting_date, shooting_place, bullets_amount)
         self.bullets_used_total += bullets_amount
 
-    def remove_shooting(self, shooting_date):
-        self.bullets_used_total -= self.shooting.get(shooting_date).__getitem__(1)
-        del self.shooting[shooting_date]
+    def remove_shooting(self, shooting_index):
+        self.bullets_used_total -= self.shooting.get(shooting_index).__getitem__(1)
+        del self.shooting[shooting_index]
+
+    def print_shooting_date(self):
+        for k, v in self.shooting:
+            print(k)
 
     def get_printed_gun_property_list(self):
         print("Factory: " + self.get_factory())
@@ -33,8 +37,21 @@ class GunClass:
         print("Date last cleaning: " + str(self.get_last_cleaning()))
         print("Gun's number: " + self.get_gun_number())
 
+    def get_latest_used_key(self):
+        latest_key = 0
+        if len(self.shooting) == 0:
+            return latest_key
+        for k, v in self.shooting:
+            if k > latest_key:
+                latest_key = k
+        return latest_key
+
+
     def __str__(self):
         return "Gun: %s, %s " % (self.factory, self.model)
+
+    def get_shooting(self):
+        return self.shooting
 
     def get_factory(self):
         return self.factory
@@ -83,3 +100,5 @@ class GunClass:
 
     def set_gun_number(self, gun_number):
         self.gun_number = gun_number
+
+
