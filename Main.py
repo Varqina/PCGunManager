@@ -17,7 +17,16 @@ while True:
     if choice == 4: #Display
         GunManager.display_all()
     if choice == 5:
-        GunManager.add_shooting()
+        print(SetOfStringsClass.shooting_menu)
+        choice = int(input(SetOfStringsClass.choice_request))
+        if choice == 1:
+            GunManager.add_shooting()
+        if choice == 2:
+            GunManager.edit_shooting()
+        if choice == 3:
+            GunManager.remove_shooting()
+        else:
+            pass
     if choice == 6:
         break
 

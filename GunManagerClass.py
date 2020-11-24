@@ -35,17 +35,20 @@ class GunManagerClass:
         print(SetOfStringsClass.value_updated)
         edited_gun.get_printed_gun_property_list()
 
-    def display_all(self):
-        detailed_view = input(SetOfStringsClass.detailed_view)
+    def display_all_with_details(self):
         index = 1
         for gun in self.gun_list:
             print(str(index) + ": " + str(gun))
-            if detailed_view == "yes" or detailed_view == "y":
-                gun.get_printed_gun_property_list()
+            gun.get_printed_gun_property_list()
+            index += 1
+
+    def display_all(self):
+        index = 1
+        for gun in self.gun_list:
+            print(str(index) + ": " + str(gun))
             index += 1
 
     def add_shooting(self):
-        #2add remove shooting
         index = 1
         for gun in self.gun_list:
             print(str(index) + ": " + str(gun))
@@ -55,3 +58,11 @@ class GunManagerClass:
         shooting_place = input(SetOfStringsClass.add_shooting_place)
         bullets_used = input(SetOfStringsClass.add_used_bullets)
         self.gun_list[gun_index].add_shooting(shooting_date, shooting_place, bullets_used)
+
+    def edit_shooting(self):
+        self.display_all()
+        gun_index = int(input(SetOfStringsClass.choice_gun + " to edit")) - 1
+        pass
+
+    def remove_shooting(self):
+        pass

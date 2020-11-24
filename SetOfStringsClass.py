@@ -4,9 +4,14 @@ main_menu_loop = """
 2 - Edit a gun
 3 - Remove gun
 4 - Display the stock
-5 - Add shooting activity
-5 - Exit the application
+5 - Edit shooting activity
+6 - Exit the application
 """
+shooting_menu = """
+1 - Add shooting
+2 - Edit shooting
+3 - Remove shooting 
+4 - Return main menu"""
 provide_factory = """Please provide gun's factory name"""
 provide_model = """Please provide gun's model name"""
 provide_gun_number = """Please provide gun's number"""
