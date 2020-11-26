@@ -60,8 +60,8 @@ class GunManagerClass:
 
     def edit_shooting(self):
         picked_gun = self.user_pick_gun_from_list()
-        shooting_length = len(picked_gun.get_shooting())
-        if shooting_length == 0: return SetOfStringsClass.no_shooting_available
+        shooting_amount = len(picked_gun.get_shooting())
+        if shooting_amount == 0: return SetOfStringsClass.no_shooting_available
         shooting_to_edit = 1
         if len(picked_gun.get_shooting()) > 1:
             picked_gun.print_shooting_date()
