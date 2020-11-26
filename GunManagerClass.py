@@ -72,6 +72,8 @@ class GunManagerClass:
 
 
     def remove_shooting(self):
+        picked_gun = self.user_pick_gun_from_list()
+
         pass
 
     def user_pick_gun_from_list(self):
