@@ -22,11 +22,12 @@ class GunManagerClass:
             gun_to_be_removed = GuiRemoveGun.run_gui(self.gun_list)
         else:
             gun_to_be_removed = input(SetOfStringsClass.provide_gun_number)
+        if gun_to_be_removed is not None:
+            for gun in self.gun_list:
+                if gun.get_number() == gun_to_be_removed:
+                    self.gun_list.remove(gun)
+                    break
 
-        for gun in self.gun_list:
-            if gun.get_number() == gun_to_be_removed:
-                self.gun_list.remove(gun)
-                break
 
     def edit_gun(self):
         picked_gun = self.user_pick_gun_from_list()
