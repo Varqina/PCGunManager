@@ -35,7 +35,7 @@ class GunClass:
         print("Buy price: " + str(self.get_buy_price()))
         print("Brand new: " + str(self.get_brand_new()))
         print("Date last cleaning: " + str(self.get_last_cleaning()))
-        print("Gun's number: " + self.get_gun_number())
+        print("Gun's number: " + self.get_number())
 
     def get_latest_used_key(self):
         latest_key = 0
@@ -46,9 +46,8 @@ class GunClass:
                 latest_key = k
         return latest_key
 
-
     def __str__(self):
-        return "Gun: %s, %s " % (self.factory, self.model)
+        return "Gun: %s, %s, %s " % (self.factory, self.model, self.gun_number)
 
     def get_shooting(self):
         return self.shooting
@@ -74,7 +73,7 @@ class GunClass:
     def get_last_cleaning(self):
         return self.last_cleaning
 
-    def get_gun_number(self):
+    def get_number(self):
         return self.gun_number
 
     def set_factory(self, factory):
@@ -100,5 +99,3 @@ class GunClass:
 
     def set_gun_number(self, gun_number):
         self.gun_number = gun_number
-
-

@@ -1,3 +1,5 @@
+import GlobalVariables
+from GUI import GuiAddGun, GuiRemoveGun
 from GunClass import GunClass
 import SetOfStringsClass
 
@@ -6,15 +8,23 @@ import SetOfStringsClass
 class GunManagerClass:
     gun_list = []
 
-    def add_gun(self,):
-        gun_to_be_added = GunClass(input(SetOfStringsClass.provide_factory), input(SetOfStringsClass.provide_model),
-                                   input(SetOfStringsClass.provide_gun_number))
+    def add_gun(self):
+        if GlobalVariables.gui:
+            gun_form = GuiAddGun.run_gui()
+            gun_to_be_added = GunClass(gun_form[0], gun_form[1], gun_form[2])
+        else:
+            gun_to_be_added = GunClass(input(SetOfStringsClass.provide_factory), input(SetOfStringsClass.provide_model),
+                                       input(SetOfStringsClass.provide_gun_number))
         self.gun_list.append(gun_to_be_added)
 
     def remove_gun(self):
-        gun_to_be_removed = input(SetOfStringsClass.provide_gun_number)
+        if GlobalVariables.gui:
+            gun_to_be_removed = GuiRemoveGun.run_gui(self.gun_list)
+        else:
+            gun_to_be_removed = input(SetOfStringsClass.provide_gun_number)
+
         for gun in self.gun_list:
-            if gun.get_gun_number() == gun_to_be_removed:
+            if gun.get_number() == gun_to_be_removed:
                 self.gun_list.remove(gun)
                 break
 

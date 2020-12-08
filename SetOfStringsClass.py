@@ -1,12 +1,19 @@
+program_name = """Gun Manager"""
 choice_request = """Please provide value to proceed"""
+add_gun_to_the_stock = "Add gun to the stock"
+edit_gun = "Edit a gun"
+remove_gun = "Remove gun"
+display_stock = "Display the stock"
+edit_shooting_activity = "Edit shooting activity"
+exit_application = "Exit the application"
 main_menu_loop = """
-1 - Add gun to the stock
-2 - Edit a gun
-3 - Remove gun
-4 - Display the stock
-5 - Edit shooting activity
-6 - Exit the application
-"""
+1 - %s
+2 - %s
+3 - %s
+4 - %s
+5 - %s
+6 - %s
+""" % (add_gun_to_the_stock, edit_gun, remove_gun, display_stock, edit_shooting_activity, exit_application)
 shooting_menu = """
 1 - Add shooting
 2 - Edit shooting
