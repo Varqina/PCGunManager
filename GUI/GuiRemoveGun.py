@@ -1,31 +1,41 @@
 import PySimpleGUI as sg
 
 import SetOfStringsClass
+from GUI import GuiMessageTextDialog
 
 
 def run_gui(gun_list):
     sg.theme('DarkAmber')
     heading = ['index', 'number', 'factory', 'model']
     table_data = create_table_data(gun_list)
-    layout = [[sg.Table(values=table_data, auto_size_columns=True, headings=heading)],
+    layout = [[sg.Table(values=table_data, auto_size_columns=True, headings=heading), sg.Button('Delete')],
               [sg.Text(SetOfStringsClass.choice_gun), sg.Input('Index Number')],
-              [sg.Button("Remove")]
+              [sg.Button("Remove"), sg.Button("Back")]
               ]
-    window = sg.Window(SetOfStringsClass.program_name, layout, location=(0, 0), size=(400, 400))
+    window = sg.Window(SetOfStringsClass.program_name, layout, location=(0, 0))
     while True:
         event, values = window.read()
         if event == "Remove":
-            break
-        if event == sg.WIN_CLOSED or 'Exit':
+            if is_user_value_correct(values[1]) and int(values[1]) < len(table_data):
+                picked_index = int(values[1])
+                picked_gun = table_data[picked_index]
+                picked_gun_number = picked_gun[1]
+                break
+            else:
+                GuiMessageTextDialog.run_gui("Provided value: "+values[1]+" is incorrect")
+        if event == "Delete":
+            if values[0] is not []:
+                picked_index = int(values[0][0])
+                picked_gun = table_data[picked_index]
+                picked_gun_number = picked_gun[1]
+                break
+            else:
+                GuiMessageTextDialog.run_gui("You need to pick expected row")
+        if event == sg.WIN_CLOSED or event == "Back":
+            picked_gun_number = None
             break
     window.close()
-    picked_gun = table_data[int(values[1])]
-
-    return picked_gun[1]
-
-#TODO Verification provided number
-#TODO Size for columns index minimum
-
+    return picked_gun_number
 
 def create_table_data(gun_list):
     table_data = []
@@ -35,3 +45,10 @@ def create_table_data(gun_list):
         table_data.append(temporary_tab)
         index += 1
     return table_data
+
+def is_user_value_correct(user_value):
+    try:
+        int(user_value)
+    except (TypeError, ValueError):
+        return False
+    return True

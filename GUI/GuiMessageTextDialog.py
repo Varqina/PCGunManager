@@ -8,7 +8,7 @@ def run_gui(message_text):
     layout = [[sg.Text(message_text)],
               [sg.Button("OK")]
               ]
-    window = sg.Window(SetOfStringsClass.program_name, layout)
+    window = sg.Window(SetOfStringsClass.program_name, layout, disable_minimize=True, disable_close=True)
     while True:
         event, values = window.read()
         if event == "Add":
