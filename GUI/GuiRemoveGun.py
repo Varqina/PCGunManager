@@ -3,14 +3,17 @@ import PySimpleGUI as sg
 import SetOfStringsClass
 from GUI import GuiMessageTextDialog
 
+#TODO online update
+#TODO search
+#TODO buttons to right
 
 def run_gui(gun_list):
     sg.theme('DarkAmber')
     heading = ['index', 'number', 'factory', 'model']
     table_data = create_table_data(gun_list)
     layout = [[sg.Table(values=table_data, auto_size_columns=True, headings=heading), sg.Button('Delete')],
-              [sg.Text(SetOfStringsClass.choice_gun), sg.Input('Index Number')],
-              [sg.Button("Remove"), sg.Button("Back")]
+              [sg.Text(SetOfStringsClass.choice_gun), sg.Input('0', size=(3,1)), sg.Button("Remove")],
+              [sg.Button("Back")]
               ]
     window = sg.Window(SetOfStringsClass.program_name, layout, location=(0, 0))
     while True:
@@ -22,9 +25,9 @@ def run_gui(gun_list):
                 picked_gun_number = picked_gun[1]
                 break
             else:
-                GuiMessageTextDialog.run_gui("Provided value: "+values[1]+" is incorrect")
+                GuiMessageTextDialog.run_gui("Provided value: " + values[1] + " is incorrect")
         if event == "Delete":
-            if values[0] is not []:
+            if len(values[0]) > 0:
                 picked_index = int(values[0][0])
                 picked_gun = table_data[picked_index]
                 picked_gun_number = picked_gun[1]
@@ -37,6 +40,7 @@ def run_gui(gun_list):
     window.close()
     return picked_gun_number
 
+
 def create_table_data(gun_list):
     table_data = []
     index = 0
@@ -45,6 +49,7 @@ def create_table_data(gun_list):
         table_data.append(temporary_tab)
         index += 1
     return table_data
+
 
 def is_user_value_correct(user_value):
     try:
