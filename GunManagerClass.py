@@ -1,5 +1,5 @@
 import GlobalVariables
-from GUI import GuiAddGun, GuiRemoveGun
+from GUI import GuiAddGun, GuiRemoveGun, GuiMessageTextDialog
 from GunClass import GunClass
 import SetOfStringsClass
 
@@ -18,15 +18,19 @@ class GunManagerClass:
         self.gun_list.append(gun_to_be_added)
 
     def remove_gun(self):
-        if GlobalVariables.gui:
-            gun_to_be_removed = GuiRemoveGun.run_gui(self.gun_list)
+        if len(self.gun_list) is not 0:
+            if GlobalVariables.gui:
+                gun_to_be_removed = GuiRemoveGun.run_gui(self.gun_list)
+            else:
+                gun_to_be_removed = input(SetOfStringsClass.provide_gun_number)
+            if gun_to_be_removed is not None:
+                for gun in self.gun_list:
+                    if gun.get_number() == gun_to_be_removed:
+                        self.gun_list.remove(gun)
+                        break
         else:
-            gun_to_be_removed = input(SetOfStringsClass.provide_gun_number)
-        if gun_to_be_removed is not None:
-            for gun in self.gun_list:
-                if gun.get_number() == gun_to_be_removed:
-                    self.gun_list.remove(gun)
-                    break
+            GuiMessageTextDialog.run_gui("There is no gun in the stock")
+
 
 
     def edit_gun(self):

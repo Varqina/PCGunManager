@@ -20,8 +20,9 @@ def run_gui(gun_list):
             break
     window.close()
     picked_gun = table_data[int(values[1])]
+
     return picked_gun[1]
-#TODO avoid invoke on empty list
+
 #TODO Verification provided number
 #TODO Size for columns index minimum
 
