@@ -2,6 +2,8 @@ import PySimpleGUI as sg
 
 import SetOfStringsClass
 
+# todo serializacja
+# todo load application
 
 def run_gui(gun_manager):
     sg.theme('DarkAmber')

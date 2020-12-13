@@ -11,6 +11,7 @@ class GunManagerClass:
     def add_gun(self):
         if GlobalVariables.gui:
             gun_form = GuiAddGun.run_gui()
+            #przetworzyc liste obiektow
             gun_to_be_added = GunClass(gun_form[0], gun_form[1], gun_form[2])
         else:
             gun_to_be_added = GunClass(input(SetOfStringsClass.provide_factory), input(SetOfStringsClass.provide_model),
@@ -18,16 +19,17 @@ class GunManagerClass:
         self.gun_list.append(gun_to_be_added)
 
     def remove_gun(self):
-        if len(self.gun_list) is not 0:
+        if len(self.gun_list) != 0:
             if GlobalVariables.gui:
-                gun_to_be_removed = GuiRemoveGun.run_gui(self.gun_list)
+                guns_to_be_removed = GuiRemoveGun.run_gui(self.gun_list)
             else:
-                gun_to_be_removed = input(SetOfStringsClass.provide_gun_number)
-            if gun_to_be_removed is not None:
+                guns_to_be_removed = input(SetOfStringsClass.provide_gun_number)
+            if guns_to_be_removed is not None:
                 for gun in self.gun_list:
-                    if gun.get_number() == gun_to_be_removed:
-                        self.gun_list.remove(gun)
-                        break
+                    for gun_number_to_be_removed in guns_to_be_removed:
+                        if gun.get_number() == gun_number_to_be_removed:
+                            self.gun_list.remove(gun)
+                            break
         else:
             GuiMessageTextDialog.run_gui("There is no gun in the stock")
 
