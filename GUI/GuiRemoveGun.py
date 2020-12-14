@@ -51,7 +51,7 @@ def run_gui(gun_list):
 
 def create_table_data(gun_list):
     table_data = []
-    index = 0
+    index = 1
     for gun in gun_list:
         temporary_tab = [index, gun.get_number(), gun.get_factory(), gun.get_model()]
         table_data.append(temporary_tab)
