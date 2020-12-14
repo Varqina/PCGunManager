@@ -13,15 +13,16 @@ def run_gui(gun_list):
     table_heading = ['index', 'number', 'factory', 'model']
     table_data = create_table_data(gun_list)
     window = create_window(table_data, heading=table_heading)
+    event, values = window.read()
+    """Variables to make it more clear"""
+    search_value = values[0]
+    table_of_lists = values[1]
+    index_of_selected_list = table_of_lists[0]
+    provided_users_index = values[2]
     numbers_of_picked_guns = []
+
     while True:
         event, values = window.read()
-        """Variables to make it more clear"""
-        search_value = values[0]
-        table_of_lists = values[1]
-        index_of_selected_list = table_of_lists[0]
-        provided_users_index = values[2]
-
         if event == "Search":
             run_search(search_value)
         if event == "Delete":
