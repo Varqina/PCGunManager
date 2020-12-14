@@ -6,40 +6,43 @@ from GUI import GuiMessageTextDialog
 
 # TODO search
 # TODO Resize and aligment
-# TODO index start 1
-
-
 
 
 def run_gui(gun_list):
     sg.theme('DarkAmber')
-    heading = ['index', 'number', 'factory', 'model']
+    table_heading = ['index', 'number', 'factory', 'model']
     table_data = create_table_data(gun_list)
-    window = create_window(table_data, heading)
+    window = create_window(table_data, heading=table_heading)
     numbers_of_picked_guns = []
-
     while True:
         event, values = window.read()
+        """Variables to make it more clear"""
+        search_value = values[0]
+        table_of_lists = values[1]
+        index_of_selected_list = table_of_lists[0]
+        provided_users_index = values[2]
+
         if event == "Search":
-            run_search(values[0])
-        if event == "Remove":
-            if is_user_value_correct(values[2]) and int(values[2]) < len(table_data):
-                picked_index = int(values[2])
-                picked_gun = table_data[picked_index]
-                numbers_of_picked_guns.append(picked_gun[1])
-                table_data.remove(picked_gun)
-                window = refresh_window(refresh_table_data(table_data), heading, window)
-            else:
-                GuiMessageTextDialog.run_gui("Provided value: " + values[2] + " is incorrect")
+            run_search(search_value)
         if event == "Delete":
-            if len(values[1]) > 0:
-                picked_index = int(values[1][0])
+            if len(table_of_lists) > 0:
+                picked_index = int(index_of_selected_list)
                 picked_gun = table_data[picked_index]
-                numbers_of_picked_guns.append(picked_gun[1])
+                picket_gun_number = picked_gun[1]
+                numbers_of_picked_guns.append(picket_gun_number)
                 table_data.remove(picked_gun)
-                window = refresh_window(refresh_table_data(table_data), heading, window)
+                window = refresh_window(refresh_table_data(table_data), table_heading, window)
             else:
                 GuiMessageTextDialog.run_gui("You need to pick expected row")
+        if event == "Remove":
+            if is_user_value_correct(provided_users_index) and int(provided_users_index) < len(table_data):
+                picked_index = int(provided_users_index)
+                picked_gun = table_data[picked_index]
+                numbers_of_picked_guns.append(picked_gun[1])
+                table_data.remove(picked_gun)
+                window = refresh_window(refresh_table_data(table_data), table_heading, window)
+            else:
+                GuiMessageTextDialog.run_gui("Provided value: " + provided_users_index + " is incorrect")
         if event == sg.WIN_CLOSED or event == "Back":
             break
         if len(table_data) == 0:
@@ -47,6 +50,7 @@ def run_gui(gun_list):
             break
     window.close()
     return numbers_of_picked_guns
+
 
 def refresh_table_data(table_data):
     index = 1
@@ -73,8 +77,10 @@ def is_user_value_correct(user_value):
         return False
     return True
 
+
 def create_window(table_data, heading, first_invoke=True):
     return refresh_window(table_data, heading, first_invoke=first_invoke)
+
 
 def refresh_window(table_data, heading, window=None, first_invoke=False):
     if not first_invoke:
