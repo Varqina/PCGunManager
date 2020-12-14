@@ -6,6 +6,7 @@ from GUI import GuiMessageTextDialog
 
 # TODO search
 # TODO Resize and aligment
+# TODO index start 1
 
 
 
@@ -14,7 +15,7 @@ def run_gui(gun_list):
     sg.theme('DarkAmber')
     heading = ['index', 'number', 'factory', 'model']
     table_data = create_table_data(gun_list)
-    window = get_window(table_data, heading, first_invoke=True)
+    window = refresh_window(table_data, heading, first_invoke=True)
     numbers_of_picked_guns = []
 
     while True:
@@ -22,25 +23,21 @@ def run_gui(gun_list):
         if event == "Search":
             run_search(values[0])
         if event == "Remove":
-            #1->2
-            if is_user_value_correct(values[1]) and int(values[1]) < len(table_data):
-                picked_index = int(values[1])
+            if is_user_value_correct(values[2]) and int(values[2]) < len(table_data):
+                picked_index = int(values[2])
                 picked_gun = table_data[picked_index]
                 numbers_of_picked_guns.append(picked_gun[1])
                 table_data.remove(picked_gun)
-                window = get_window(table_data, heading, window)
+                window = refresh_window(table_data, heading, window)
             else:
-                GuiMessageTextDialog.run_gui("Provided value: " + values[1] + " is incorrect")
+                GuiMessageTextDialog.run_gui("Provided value: " + values[2] + " is incorrect")
         if event == "Delete":
-            #[0] -> [1]
-            #[0][0] -> [1][0]
-            #[1] -> [2]
-            if len(values[0]) > 0:
-                picked_index = int(values[0][0])
+            if len(values[1]) > 0:
+                picked_index = int(values[1][0])
                 picked_gun = table_data[picked_index]
                 numbers_of_picked_guns.append(picked_gun[1])
                 table_data.remove(picked_gun)
-                window = get_window(table_data, heading, window)
+                window = refresh_window(table_data, heading, window)
             else:
                 GuiMessageTextDialog.run_gui("You need to pick expected row")
         if event == sg.WIN_CLOSED or event == "Back":
@@ -70,7 +67,7 @@ def is_user_value_correct(user_value):
     return True
 
 
-def get_window(table_data, heading, window=None, first_invoke=False):
+def refresh_window(table_data, heading, window=None, first_invoke=False):
     if not first_invoke:
         window.close()
     layout = [[sg.Input("Write gun here"), sg.Button("Search")],
@@ -82,5 +79,5 @@ def get_window(table_data, heading, window=None, first_invoke=False):
     return window
 
 
-def run_search():
+def run_search(text):
     pass
