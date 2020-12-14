@@ -15,7 +15,7 @@ def run_gui(gun_list):
     sg.theme('DarkAmber')
     heading = ['index', 'number', 'factory', 'model']
     table_data = create_table_data(gun_list)
-    window = refresh_window(table_data, heading, first_invoke=True)
+    window = create_window(table_data, heading)
     numbers_of_picked_guns = []
 
     while True:
@@ -28,7 +28,7 @@ def run_gui(gun_list):
                 picked_gun = table_data[picked_index]
                 numbers_of_picked_guns.append(picked_gun[1])
                 table_data.remove(picked_gun)
-                window = refresh_window(table_data, heading, window)
+                window = refresh_window(refresh_table_data(table_data), heading, window)
             else:
                 GuiMessageTextDialog.run_gui("Provided value: " + values[2] + " is incorrect")
         if event == "Delete":
@@ -37,7 +37,7 @@ def run_gui(gun_list):
                 picked_gun = table_data[picked_index]
                 numbers_of_picked_guns.append(picked_gun[1])
                 table_data.remove(picked_gun)
-                window = refresh_window(table_data, heading, window)
+                window = refresh_window(refresh_table_data(table_data), heading, window)
             else:
                 GuiMessageTextDialog.run_gui("You need to pick expected row")
         if event == sg.WIN_CLOSED or event == "Back":
@@ -47,6 +47,13 @@ def run_gui(gun_list):
             break
     window.close()
     return numbers_of_picked_guns
+
+def refresh_table_data(table_data):
+    index = 1
+    for row in table_data:
+        row[0] = index
+        index += 1
+    return table_data
 
 
 def create_table_data(gun_list):
@@ -66,6 +73,8 @@ def is_user_value_correct(user_value):
         return False
     return True
 
+def create_window(table_data, heading, first_invoke=True):
+    return refresh_window(table_data, heading, first_invoke=first_invoke)
 
 def refresh_window(table_data, heading, window=None, first_invoke=False):
     if not first_invoke:
