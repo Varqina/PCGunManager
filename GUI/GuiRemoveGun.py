@@ -6,6 +6,7 @@ from GUI import GuiMessageTextDialog
 
 # TODO search
 # TODO Resize and aligment
+# TODO unikanie dodawanie tych samych broni
 
 
 def run_gui(gun_list):
@@ -22,10 +23,11 @@ def run_gui(gun_list):
     numbers_of_picked_guns = []
 
     while True:
-        event, values = window.read()
+
         if event == "Search":
             run_search(search_value)
         if event == "Delete":
+            print("dupa")
             if len(table_of_lists) > 0:
                 picked_index = int(index_of_selected_list)
                 picked_gun = table_data[picked_index]
@@ -49,6 +51,7 @@ def run_gui(gun_list):
         if len(table_data) == 0:
             GuiMessageTextDialog.run_gui("There are no more guns")
             break
+        event, values = window.read()
     window.close()
     return numbers_of_picked_guns
 
