@@ -14,20 +14,16 @@ def run_gui(gun_list):
     table_heading = ['index', 'number', 'factory', 'model']
     table_data = create_table_data(gun_list)
     window = create_window(table_data, heading=table_heading)
-    event, values = window.read()
-    """Variables to make it more clear"""
-    search_value = values[0]
-    table_of_lists = values[1]
-    index_of_selected_list = table_of_lists[0]
-    provided_users_index = values[2]
     numbers_of_picked_guns = []
 
     while True:
-
+        event, values = window.read()
         if event == "Search":
+            search_value = values[0]
             run_search(search_value)
         if event == "Delete":
-            print("dupa")
+            table_of_lists = values[1]
+            index_of_selected_list = table_of_lists[0]
             if len(table_of_lists) > 0:
                 picked_index = int(index_of_selected_list)
                 picked_gun = table_data[picked_index]
@@ -38,6 +34,7 @@ def run_gui(gun_list):
             else:
                 GuiMessageTextDialog.run_gui("You need to pick expected row")
         if event == "Remove":
+            provided_users_index = values[2]
             if is_user_value_correct(provided_users_index) and int(provided_users_index) < len(table_data):
                 picked_index = int(provided_users_index)
                 picked_gun = table_data[picked_index]
@@ -51,7 +48,7 @@ def run_gui(gun_list):
         if len(table_data) == 0:
             GuiMessageTextDialog.run_gui("There are no more guns")
             break
-        event, values = window.read()
+
     window.close()
     return numbers_of_picked_guns
 

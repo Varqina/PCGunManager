@@ -1,13 +1,11 @@
-#Load Data
-#Load Menu
-import PySimpleGUI as sg
-
 import GlobalVariables
 import SetOfStringsClass
 from GUI import GuiMain
 from GunManagerClass import GunManagerClass
+from SaveAndLoad import save_application_data, load_application_data
 
 gun_manager = GunManagerClass()
+gun_manager.set_gun_list(load_application_data())
 
 if GlobalVariables.gui:
     GuiMain.run_gui(gun_manager)
@@ -36,5 +34,5 @@ else:
                 pass
         if choice == 6:
             break
-
+save_application_data(gun_manager.get_gun_list())
 #Save Data

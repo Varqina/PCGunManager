@@ -4,14 +4,14 @@ from GunClass import GunClass
 import SetOfStringsClass
 
 
-
 class GunManagerClass:
     gun_list = []
 
     def add_gun(self):
         if GlobalVariables.gui:
             gun_form = GuiAddGun.run_gui()
-            #przetworzyc liste obiektow
+            # przetworzyc liste obiektow
+            # TODO ENUM
             gun_to_be_added = GunClass(gun_form[0], gun_form[1], gun_form[2])
         else:
             gun_to_be_added = GunClass(input(SetOfStringsClass.provide_factory), input(SetOfStringsClass.provide_model),
@@ -32,8 +32,6 @@ class GunManagerClass:
                             break
         else:
             GuiMessageTextDialog.run_gui("There is no gun in the stock")
-
-
 
     def edit_gun(self):
         picked_gun = self.user_pick_gun_from_list()
@@ -84,9 +82,7 @@ class GunManagerClass:
             picked_gun.print_shooting_date()
             shooting_to_edit = input(SetOfStringsClass.choice_shooting)
         shooting_properties = picked_gun.get_shooting[shooting_to_edit]
-        #TODO: GET enum to access tab elements by name not index number
-
-
+        # TODO: GET enum to access tab elements by name not index number
 
     def remove_shooting(self):
         picked_gun = self.user_pick_gun_from_list()
@@ -97,3 +93,9 @@ class GunManagerClass:
         self.display_all()
         gun_index = int(input(SetOfStringsClass.choice_gun + " to edit")) - 1
         return self.gun_list[gun_index]
+
+    def get_gun_list(self):
+        return self.gun_list
+
+    def set_gun_list(self, gun_list):
+        self.gun_list = gun_list
