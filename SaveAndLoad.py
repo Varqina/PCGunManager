@@ -12,7 +12,6 @@ backup_directory = 'backup'
 backup_directory_path = os.path.join(current_path, backup_directory)
 
 
-
 def save_application_data(gun_list):
     create_backup_file()
     create_directory(database_path)

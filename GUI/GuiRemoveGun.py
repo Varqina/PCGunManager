@@ -11,7 +11,7 @@ from GUI import GuiMessageTextDialog
 
 def run_gui(gun_list):
     sg.theme('DarkAmber')
-    table_heading = ['index', 'number', 'factory', 'model']
+    table_heading = ['index', 'serial number', 'factory', 'model']
     table_data = create_table_data(gun_list)
     window = create_window(table_data, heading=table_heading)
     numbers_of_picked_guns = []
@@ -27,8 +27,8 @@ def run_gui(gun_list):
             if len(table_of_lists) > 0:
                 picked_index = int(index_of_selected_list)
                 picked_gun = table_data[picked_index]
-                picket_gun_number = picked_gun[1]
-                numbers_of_picked_guns.append(picket_gun_number)
+                picked_gun_serial_number = picked_gun[1]
+                numbers_of_picked_guns.append(picked_gun_serial_number)
                 table_data.remove(picked_gun)
                 window = refresh_window(refresh_table_data(table_data), table_heading, window)
             else:
