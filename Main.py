@@ -2,11 +2,10 @@ import GlobalVariables
 import SetOfStringsClass
 from GUI import GuiMain
 from GunManagerClass import GunManagerClass
-from SaveAndLoad import save_application_data, load_application_data
+from SaveAndLoad import save_application_data, load_application_data, create_backup_file
 
 gun_manager = GunManagerClass()
 gun_manager.set_gun_list(load_application_data())
-
 if GlobalVariables.gui:
     GuiMain.run_gui(gun_manager)
 else:
