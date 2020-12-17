@@ -7,11 +7,11 @@ from GUI import GuiMessageTextDialog
 # TODO search
 # TODO Resize and aligment
 # TODO unikanie dodawanie tych samych broni
-
+# TODO zamienic kolejnoscia Serial number dac na koniec
 
 def run_gui(gun_list):
     sg.theme('DarkAmber')
-    table_heading = ['index', 'serial number', 'factory', 'model']
+    table_heading = ['index', 'factory', 'model', 'serial number']
     table_data = create_table_data(gun_list)
     window = create_window(table_data, heading=table_heading)
     numbers_of_picked_guns = []
@@ -27,7 +27,7 @@ def run_gui(gun_list):
             if len(table_of_lists) > 0:
                 picked_index = int(index_of_selected_list)
                 picked_gun = table_data[picked_index]
-                picked_gun_serial_number = picked_gun[1]
+                picked_gun_serial_number = picked_gun[3]
                 numbers_of_picked_guns.append(picked_gun_serial_number)
                 table_data.remove(picked_gun)
                 window = refresh_window(refresh_table_data(table_data), table_heading, window)
@@ -35,10 +35,11 @@ def run_gui(gun_list):
                 GuiMessageTextDialog.run_gui("You need to pick expected row")
         if event == "Remove":
             provided_users_index = values[2]
-            if is_user_value_correct(provided_users_index) and int(provided_users_index) < len(table_data):
-                picked_index = int(provided_users_index)
+            if is_user_value_correct(provided_users_index) and int(provided_users_index)-1 < len(table_data):
+                picked_index = int(provided_users_index) -1
                 picked_gun = table_data[picked_index]
-                numbers_of_picked_guns.append(picked_gun[1])
+                picked_gun_serial_number = picked_gun[3]
+                numbers_of_picked_guns.append(picked_gun_serial_number)
                 table_data.remove(picked_gun)
                 window = refresh_window(refresh_table_data(table_data), table_heading, window)
             else:
@@ -50,6 +51,7 @@ def run_gui(gun_list):
             break
 
     window.close()
+    print(numbers_of_picked_guns)
     return numbers_of_picked_guns
 
 
@@ -65,7 +67,7 @@ def create_table_data(gun_list):
     table_data = []
     index = 1
     for gun in gun_list:
-        temporary_tab = [index, gun.get_number(), gun.get_factory(), gun.get_model()]
+        temporary_tab = [index, gun.get_factory(), gun.get_model(), gun.get_number()]
         table_data.append(temporary_tab)
         index += 1
     return table_data

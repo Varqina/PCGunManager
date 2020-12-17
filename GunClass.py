@@ -6,14 +6,14 @@ class GunClass:
     buy_price = 0
     brand_new = None
     last_cleaning = None
-    gun_number = None
+    gun_serial_number = None
 
     shooting = {}  # key - int, value = [date of training/shooting, place, ammo used]
 
     def __init__(self, factory, model, gun_number):
         self.factory = factory
         self.model = model
-        self.gun_number = gun_number
+        self.gun_serial_number = gun_number
 
     def add_shooting(self, shooting_date, shooting_place, bullets_amount):
         self.shooting[self.get_latest_used_key() + 1] = (shooting_date, shooting_place, bullets_amount)
@@ -47,7 +47,7 @@ class GunClass:
         return latest_key
 
     def __str__(self):
-        return "Gun: %s, %s, %s " % (self.factory, self.model, self.gun_number)
+        return "Gun: %s, %s, %s " % (self.factory, self.model, self.gun_serial_number)
 
     def get_shooting(self):
         return self.shooting
@@ -74,7 +74,7 @@ class GunClass:
         return self.last_cleaning
 
     def get_number(self):
-        return self.gun_number
+        return self.gun_serial_number
 
     def set_factory(self, factory):
         self.factory = factory
@@ -98,4 +98,4 @@ class GunClass:
         self.last_cleaning = last_cleaning
 
     def set_gun_number(self, gun_number):
-        self.gun_number = gun_number
+        self.gun_serial_number = gun_number
