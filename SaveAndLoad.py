@@ -14,10 +14,11 @@ backup_directory_path = os.path.join(current_path, backup_directory)
 
 
 def save_application_data(gun_list):
-    create_backup_file(gun_list)
     create_directory(database_path)
     gun_list_file = open(save_file_path, 'wb')
     pickle.dump(gun_list, gun_list_file)
+    gun_list_file.close()
+    create_backup_file(gun_list)
 
 
 def load_application_data():
@@ -47,13 +48,31 @@ def create_directory(new_directory_path):
 def get_latest_dump_file():
     directory_list = get_backup_directory_list()
     if len(directory_list) > 0:
-        latest_file = int(directory_list[0])
+        latest_file = directory_list[0]
+        latest_file = int(latest_file.replace(".obj", ""))
         for file in directory_list:
-            file = file.replace(".obj", "")
-            if int(file) > latest_file:
-                latest_file = int(file)
-        return str(latest_file)
+            file = int(file.replace(".obj", ""))
+            if file > latest_file:
+                latest_file = file
+        return str(latest_file) + '.obj'
     return None
+
+
+def get_oldest_dump_file():
+    directory_list = get_backup_directory_list()
+    oldest_file = directory_list[0]
+    oldest_file = int(oldest_file.replace(".obj", ""))
+    for file in directory_list:
+        file = int(file.replace(".obj", ""))
+        if file < oldest_file:
+            oldest_file = file
+    return str(oldest_file) + '.obj'
+
+
+def clear_backup_directory():
+    directory_list = get_backup_directory_list()
+    while len(directory_list) > 3:
+        os.remove(os.path.join(backup_directory_path, get_oldest_dump_file()))
 
 
 def create_backup_file(gun_list):
@@ -65,6 +84,7 @@ def create_backup_file(gun_list):
     if len(os.listdir(backup_directory_path)) != 0:
         #if it is not empty
         latest_dump_file_path = os.path.join(backup_directory_path, get_latest_dump_file())
+        print(latest_dump_file_path)
         gun_list_from_dump_file = pickle.load(open(latest_dump_file_path, 'rb'))
         # Compare lists with set, if the same set is empty
         if not (set(gun_list) & set(gun_list_from_dump_file)) == set():
@@ -74,17 +94,6 @@ def create_backup_file(gun_list):
     else:
         copyfile(save_file_path, backup_file_path)
     clear_backup_directory()
-
-
-def clear_backup_directory():
-    directory_list = get_backup_directory_list()
-    oldest_file = int(directory_list[0])
-    while len(directory_list) > 3:
-        for file in directory_list:
-            file = file.replace(".obj", "")
-            if int(file) < oldest_file:
-                oldest_file = int(file)
-        os.remove(os.path.join(backup_directory_path, str(oldest_file) + '.obj'))
 
 
 def get_backup_directory_list():
