@@ -3,6 +3,7 @@ import pickle
 from datetime import datetime
 from shutil import copyfile
 
+
 current_path = os.path.dirname(os.path.realpath(__file__))
 database_directory_name = 'database'
 database_directory = os.path.join(current_path, database_directory_name)
@@ -11,7 +12,6 @@ database_file = os.path.join(database_directory, save_file)
 backup_directory_name = 'backup'
 backup_directory = os.path.join(current_path, backup_directory_name)
 
-#TODO unittests
 #TODO logger
 #TODO pywinauto tests
 
@@ -37,18 +37,23 @@ def clear_application_data():
     pass
 
 
-def create_directory(new_directory_path):
-    if not os.path.isdir(new_directory_path):
+def create_directory(new_directory):
+    if not os.path.isdir(new_directory):
         try:
-            os.mkdir(new_directory_path)
+            os.mkdir(new_directory)
         except OSError:
-            print("Creation of the directory %s failed " % new_directory_path)
+            print("Creation of the directory %s failed " % new_directory)
         else:
-            print("Successfully created the directory %s " % new_directory_path)
+            print("Successfully created the directory %s " % new_directory)
 
 
-def get_latest_backup():
-    directory_list = get_backup_directory_content()
+def get_backup_directory_content():
+    return os.listdir(backup_directory)
+
+
+def get_latest_backup(directory_list=None):
+    if directory_list is None:
+        directory_list = get_backup_directory_content()
     if len(directory_list) > 0:
         latest_created_file = directory_list[0]
         latest_created_file = int(latest_created_file.replace(".obj", ""))
@@ -60,8 +65,9 @@ def get_latest_backup():
     return None
 
 
-def get_oldest_backup():
-    directory_list = get_backup_directory_content()
+def get_oldest_backup(directory_list=None):
+    if directory_list is None:
+        directory_list = get_backup_directory_content()
     if len(directory_list) > 0:
         oldest_created_file = directory_list[0]
         oldest_created_file = int(oldest_created_file.replace(".obj", ""))
@@ -69,7 +75,7 @@ def get_oldest_backup():
             file = int(file.replace(".obj", ""))
             if file < oldest_created_file:
                 oldest_created_file = file
-        return os.path.join(backup_directory, (str (oldest_created_file) + '.obj'))
+        return os.path.join(backup_directory, (str(oldest_created_file) + '.obj'))
     return None
 
 
@@ -97,5 +103,4 @@ def create_backup_file(gun_list):
     clear_backup_directory()
 
 
-def get_backup_directory_content():
-    return os.listdir(backup_directory)
+

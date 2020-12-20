@@ -1,4 +1,4 @@
-import GlobalVariables
+import Settings
 import SetOfStringsClass
 from GUI import GuiMain
 from GunManagerClass import GunManagerClass
@@ -8,7 +8,7 @@ gun_manager = GunManagerClass()
 gun_manager.set_gun_list(load_application_data())
 
 
-if GlobalVariables.gui:
+if Settings.gui:
     GuiMain.run_gui(gun_manager)
 else:
     while True:

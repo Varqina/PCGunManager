@@ -1,4 +1,4 @@
-import GlobalVariables
+import Settings
 from GUI import GuiAddGun, GuiRemoveGun, GuiMessageTextDialog
 from GunClass import GunClass
 import SetOfStringsClass
@@ -11,7 +11,7 @@ class GunManagerClass:
         return self.gun_list == other.gun_list
 
     def add_gun(self):
-        if GlobalVariables.gui:
+        if Settings.gui:
             gun_form = GuiAddGun.run_gui()
             # przetworzyc liste obiektow
             # TODO ENUM
@@ -23,7 +23,7 @@ class GunManagerClass:
 
     def remove_gun(self):
         if len(self.gun_list) != 0:
-            if GlobalVariables.gui:
+            if Settings.gui:
                 guns_to_be_removed = GuiRemoveGun.run_gui(self.gun_list)
             else:
                 guns_to_be_removed = input(SetOfStringsClass.provide_gun_number)
