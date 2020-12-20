@@ -4,6 +4,7 @@ from GunClass import GunClass
 import SetOfStringsClass
 # TODO ENUM to gun form
 
+
 class GunManagerClass:
     gun_list = []
 
@@ -20,6 +21,7 @@ class GunManagerClass:
             gun_to_be_added = GunClass(input(SetOfStringsClass.provide_factory), input(SetOfStringsClass.provide_model),
                                        input(SetOfStringsClass.provide_gun_number))
         self.gun_list.append(gun_to_be_added)
+        GuiAddGun.run_gui(True)
 
     def remove_gun(self):
         if len(self.gun_list) != 0:
