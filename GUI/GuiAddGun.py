@@ -2,7 +2,8 @@ import PySimpleGUI as sg
 
 import SetOfStringsClass
 
-
+#TODO quit error
+#TODO Add Photo
 def run_gui():
     sg.theme('DarkAmber')
     layout = [[sg.Text(SetOfStringsClass.provide_factory), sg.Input('Gun Factory')],
