@@ -6,8 +6,6 @@ from GUI import GuiMessageTextDialog
 
 # TODO search
 # TODO Resize and aligment
-# TODO unikanie dodawanie tych samych broni
-# TODO zamienic kolejnoscia Serial number dac na koniec
 
 def run_gui(gun_list):
     sg.theme('DarkAmber')

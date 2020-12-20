@@ -4,6 +4,7 @@ import SetOfStringsClass
 
 #TODO quit error
 #TODO Add Photo
+# TODO unikanie dodawanie tych samych broni
 def run_gui():
     sg.theme('DarkAmber')
     layout = [[sg.Text(SetOfStringsClass.provide_factory), sg.Input('Gun Factory')],
@@ -19,6 +20,5 @@ def run_gui():
         if event == sg.WIN_CLOSED or 'Exit':
             break
     window.close()
-    if values[0] is not None or values[1] is not None or values[2] is not None:
-        return values
+    return values
 

@@ -2,7 +2,7 @@ import Settings
 from GUI import GuiAddGun, GuiRemoveGun, GuiMessageTextDialog
 from GunClass import GunClass
 import SetOfStringsClass
-
+# TODO ENUM to gun form
 
 class GunManagerClass:
     gun_list = []
@@ -13,8 +13,8 @@ class GunManagerClass:
     def add_gun(self):
         if Settings.gui:
             gun_form = GuiAddGun.run_gui()
-            # przetworzyc liste obiektow
-            # TODO ENUM
+            if gun_form is None:
+                return None #closed empty form
             gun_to_be_added = GunClass(gun_form[0], gun_form[1], gun_form[2])
         else:
             gun_to_be_added = GunClass(input(SetOfStringsClass.provide_factory), input(SetOfStringsClass.provide_model),
