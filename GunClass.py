@@ -15,6 +15,10 @@ class GunClass:
         self.model = model
         self.gun_serial_number = gun_number
 
+    def __eq__(self, other):
+        return self.factory == other.factory and self.model == other.model and \
+               self.gun_serial_number == other.gun_serial_number
+
     def add_shooting(self, shooting_date, shooting_place, bullets_amount):
         self.shooting[self.get_latest_used_key() + 1] = (shooting_date, shooting_place, bullets_amount)
         self.bullets_used_total += bullets_amount

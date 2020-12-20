@@ -7,6 +7,9 @@ import SetOfStringsClass
 class GunManagerClass:
     gun_list = []
 
+    def __eq__(self, other):
+        return self.gun_list == other.gun_list
+
     def add_gun(self):
         if GlobalVariables.gui:
             gun_form = GuiAddGun.run_gui()

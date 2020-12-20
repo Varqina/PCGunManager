@@ -60,18 +60,20 @@ def get_latest_dump_file():
 
 def get_oldest_dump_file():
     directory_list = get_backup_directory_list()
-    oldest_file = directory_list[0]
-    oldest_file = int(oldest_file.replace(".obj", ""))
-    for file in directory_list:
-        file = int(file.replace(".obj", ""))
-        if file < oldest_file:
-            oldest_file = file
-    return str(oldest_file) + '.obj'
+    if len(directory_list) > 0:
+        oldest_file = directory_list[0]
+        oldest_file = int(oldest_file.replace(".obj", ""))
+        for file in directory_list:
+            file = int(file.replace(".obj", ""))
+            if file < oldest_file:
+                oldest_file = file
+        return str(oldest_file) + '.obj'
+    return None
 
 
 def clear_backup_directory():
-    directory_list = get_backup_directory_list()
-    while len(directory_list) > 3:
+    while len(get_backup_directory_list()) > 3:
+        print(get_backup_directory_list())
         os.remove(os.path.join(backup_directory_path, get_oldest_dump_file()))
 
 
@@ -82,12 +84,14 @@ def create_backup_file(gun_list):
     backup_file_path = os.path.join(backup_directory_path, backup_name)
     create_directory(backup_directory_path)
     if len(os.listdir(backup_directory_path)) != 0:
-        #if it is not empty
+        #If it is not empty
         latest_dump_file_path = os.path.join(backup_directory_path, get_latest_dump_file())
         print(latest_dump_file_path)
         gun_list_from_dump_file = pickle.load(open(latest_dump_file_path, 'rb'))
         # Compare lists with set, if the same set is empty
-        if not (set(gun_list) & set(gun_list_from_dump_file)) == set():
+        print(gun_list)
+        print(gun_list_from_dump_file)
+        if not gun_list == gun_list_from_dump_file:
             copyfile(save_file_path, backup_file_path)
         else:
             os.rename(latest_dump_file_path, backup_file_path)
