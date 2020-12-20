@@ -45,45 +45,42 @@ def create_directory(new_directory_path):
 
 
 def get_latest_dump_file():
-    directory_list = os.listdir(backup_directory_path)
-    latest_file = directory_list[0]
-    for file in directory_list:
-        if get_year(file) > get_year(latest_file):
-            latest_file = file
-            continue
-        if get_month(file) > get_month(latest_file):
-            latest_file = file
-            continue
-        if get_day(file) > get_day(latest_file):
-            latest_file = file
-            continue
-        if get_hour(file) > get_hour(latest_file):
-            latest_file = file
-            continue
-        if get_min(file) > get_min(latest_file):
-            latest_file = file
-            continue
-        if get_sec(file) > get_sec(latest_file):
-            latest_file = file
-            continue
-    return latest_file
+    directory_list = get_backup_directory_list()
+    if len(directory_list) > 0:
+        latest_file = int(directory_list[0])
+        for file in directory_list:
+            file = file.replace(".obj", "")
+            if int(file) > latest_file:
+                latest_file = int(file)
+        return str(latest_file)
+    return None
 
 
 def create_backup_file(gun_list):
-    # TODO chech if file has not the same content as prevoius
     # TODO keep only 3 backupfiles
     latest_dump_file_path = os.path.join(backup_directory_path, get_latest_dump_file())
-    date = datetime.now().strftime("%d_%m_%Y-%H_%M_%S")
+    date = datetime.now().strftime("%Y%m%d%H%M%S")
     backup_name = date + ".obj"
     backup_file_path = os.path.join(backup_directory_path, backup_name)
     create_directory(backup_directory_path)
     gun_list_from_backup = pickle.load(open(latest_dump_file_path, 'rb'))
-    #Compare lists with set, if the same set is empty
+    # Compare lists with set, if the same set is empty
     if not (set(gun_list) & set(gun_list_from_backup)) == set():
         copyfile(save_file_path, backup_file_path)
     else:
         os.rename(latest_dump_file_path, backup_file_path)
+    clear_backup_directory()
 
+
+def clear_backup_directory():
+    directory_list = get_backup_directory_list()
+    oldest_file = int(directory_list[0])
+    while len(directory_list) > 3:
+        for file in directory_list:
+            file = file.replace(".obj", "")
+            if int(file) < oldest_file:
+                oldest_file = int(file)
+        os.remove(os.path.join(backup_directory_path, str(oldest_file) + '.obj'))
 
 def get_year(file):
     return int(file[6:10])
@@ -107,3 +104,7 @@ def get_min(file):
 
 def get_sec(file):
     return int(file[17:19])
+
+
+def get_backup_directory_list():
+    return os.listdir(backup_directory_path)
