@@ -2,6 +2,8 @@ import Settings
 from GUI import GuiAddGun, GuiRemoveGun, GuiMessageTextDialog
 from GunClass import GunClass
 import SetOfStringsClass
+
+
 # TODO ENUM to gun form
 
 
@@ -15,14 +17,23 @@ class GunManagerClass:
         if Settings.gui:
             gun_form = GuiAddGun.run_gui()
             if gun_form is None:
-                return None #closed empty form
+                return None  # closed empty form
             gun_to_be_added = GunClass(gun_form[0], gun_form[1], gun_form[2])
         else:
             gun_to_be_added = GunClass(input(SetOfStringsClass.provide_factory), input(SetOfStringsClass.provide_model),
                                        input(SetOfStringsClass.provide_gun_number))
-        self.gun_list.append(gun_to_be_added)
         if Settings.gui:
-            GuiAddGun.run_gui(True)
+            if not self.check_if_gun_exists_in_database(gun_to_be_added):
+                self.gun_list.append(gun_to_be_added)
+                GuiAddGun.run_gui(added_comment=True)
+            else:
+                GuiAddGun.run_gui(already_in_database_comment=True)
+
+    def check_if_gun_exists_in_database(self, gun):
+        for unit in self.gun_list:
+            if unit == gun:
+                return True
+        return False
 
     def remove_gun(self):
         if len(self.gun_list) != 0:
