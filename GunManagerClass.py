@@ -33,19 +33,11 @@ class GunManagerClass:
                     self.add_gun(GuiAddGun.run_gui(added_comment=True), first_run=False)
                 else:
                     self.add_gun(GuiAddGun.run_gui(already_in_database_comment=True), first_run=False)
-
-
-    #
-    # def add_gun(self):
-    #     if Settings.gui:
-    #         gun_form = GuiAddGun.run_gui()
-    #           # closed empty form
-    #
-    #     else:
-    #         gun_to_be_added = GunClass(input(SetOfStringsClass.provide_factory), input(SetOfStringsClass.provide_model),
-    #                                    input(SetOfStringsClass.provide_gun_number))
-    #     if Settings.gui:
-
+        else:
+            gun_to_be_added = GunClass(input(SetOfStringsClass.provide_factory), input(SetOfStringsClass.provide_model),
+                                       input(SetOfStringsClass.provide_gun_number))
+            if not self.check_if_gun_exists_in_database(gun_to_be_added):
+                self.gun_list.append(gun_to_be_added)
 
     def check_if_gun_exists_in_database(self, gun):
         for unit in self.gun_list:

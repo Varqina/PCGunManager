@@ -5,7 +5,6 @@ import SetOfStringsClass
 
 # TODO quit error
 # TODO Add Photo
-# TODO unikanie dodawanie tych samych broni
 # TODO Validate values
 # TODO nie dziala gdy 2 sa uniq i jedno w bazie juz jest
 def run_gui(added_comment=False, already_in_database_comment=False):
