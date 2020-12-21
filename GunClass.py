@@ -10,10 +10,10 @@ class GunClass:
 
     shooting = {}  # key - int, value = [date of training/shooting, place, ammo used]
 
-    def __init__(self, factory, model, gun_number):
+    def __init__(self, factory, model, gun_serial_number):
         self.factory = factory
         self.model = model
-        self.gun_serial_number = gun_number
+        self.gun_serial_number = gun_serial_number
 
     def __eq__(self, other):
         return self.factory == other.factory and self.model == other.model and \
@@ -101,5 +101,5 @@ class GunClass:
     def set_last_cleaning(self, last_cleaning):
         self.last_cleaning = last_cleaning
 
-    def set_gun_number(self, gun_number):
+    def set_gun_serial_number(self, gun_number):
         self.gun_serial_number = gun_number

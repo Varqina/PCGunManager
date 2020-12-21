@@ -13,21 +13,39 @@ class GunManagerClass:
     def __eq__(self, other):
         return self.gun_list == other.gun_list
 
-    def add_gun(self):
+    def add_gun(self, gun_form=None, first_run=True):
         if Settings.gui:
-            gun_form = GuiAddGun.run_gui()
-            if gun_form is None:
-                return None  # closed empty form
-            gun_to_be_added = GunClass(gun_form[0], gun_form[1], gun_form[2])
-        else:
-            gun_to_be_added = GunClass(input(SetOfStringsClass.provide_factory), input(SetOfStringsClass.provide_model),
-                                       input(SetOfStringsClass.provide_gun_number))
-        if Settings.gui:
-            if not self.check_if_gun_exists_in_database(gun_to_be_added):
-                self.gun_list.append(gun_to_be_added)
-                GuiAddGun.run_gui(added_comment=True)
+            if gun_form is not None:
+                gun_to_be_added = GunClass(gun_form[0], gun_form[1], gun_form[2])
+                if not self.check_if_gun_exists_in_database(gun_to_be_added):
+                    self.gun_list.append(gun_to_be_added)
+                    self.add_gun(GuiAddGun.run_gui(added_comment=True), first_run=False)
+                else:
+                    self.add_gun(GuiAddGun.run_gui(already_in_database_comment=True), first_run=False)
             else:
-                GuiAddGun.run_gui(already_in_database_comment=True)
+                if first_run:
+                    gun_form = GuiAddGun.run_gui()
+                if gun_form is None:
+                    return None
+                gun_to_be_added = GunClass(gun_form[0], gun_form[1], gun_form[2])
+                if not self.check_if_gun_exists_in_database(gun_to_be_added):
+                    self.gun_list.append(gun_to_be_added)
+                    self.add_gun(GuiAddGun.run_gui(added_comment=True), first_run=False)
+                else:
+                    self.add_gun(GuiAddGun.run_gui(already_in_database_comment=True), first_run=False)
+
+
+    #
+    # def add_gun(self):
+    #     if Settings.gui:
+    #         gun_form = GuiAddGun.run_gui()
+    #           # closed empty form
+    #
+    #     else:
+    #         gun_to_be_added = GunClass(input(SetOfStringsClass.provide_factory), input(SetOfStringsClass.provide_model),
+    #                                    input(SetOfStringsClass.provide_gun_number))
+    #     if Settings.gui:
+
 
     def check_if_gun_exists_in_database(self, gun):
         for unit in self.gun_list:
@@ -62,7 +80,7 @@ class GunManagerClass:
         if property_name == "buy price": picked_gun.set_buy_price(new_property_value)
         if property_name == "brand new": picked_gun.set_brand_new(new_property_value)
         if property_name == "date last cleaning": picked_gun.set_last_cleaning(new_property_value)
-        if property_name == "Gun's number": picked_gun.set_gun_number(new_property_value)
+        if property_name == "Gun's number": picked_gun.set_gun_serial_number(new_property_value)
         print(SetOfStringsClass.value_updated)
         picked_gun.get_printed_gun_property_list()
 
