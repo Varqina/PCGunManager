@@ -35,7 +35,7 @@ class GunManagerClass:
             self.gun_list.append(gun_to_be_added)
             self.add_gun(GuiAddGun.run_gui(added_comment=True), first_run=False)
         else:
-            self.add_gun(GuiAddGun.run_gui(already_in_database_comment=True), first_run=False)
+            self.add_gun(GuiAddGun.run_gui(already_in_database=True, gun=gun_to_be_added), first_run=False)
 
     def check_if_gun_exists_in_database(self, gun_to_be_added):
         for gun in self.gun_list:
