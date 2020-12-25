@@ -3,18 +3,22 @@ import PySimpleGUI as sg
 import SetOfStringsClass
 
 
-# TODO quit error
+
 # TODO Add Photo
 # TODO Validate values
 # TODO nie dziala gdy 2 sa uniq i jedno w bazie juz jest
-def run_gui(added_comment=False, already_in_database_comment=False):
+# TODO pusty string dziala
+# TODO moge dodac bron z tym samym numerem
+def run_gui(added_comment=False, already_in_database_comment=False, gun=None):
     sg.theme('DarkAmber')
-    layout = [[sg.Text(SetOfStringsClass.provide_factory), sg.Input('Gun Factory')],
-              [sg.Text(SetOfStringsClass.provide_model), sg.Input('Gun Model')],
-              [sg.Text(SetOfStringsClass.provide_gun_number), sg.Input('Gun Serial Number')],
+    gun_factor = 'Gun Factory'
+    gun_model = 'Gun Model'
+    gun_serial_number = 'Gun Serial Number'
+    layout = [[sg.Text(SetOfStringsClass.provide_factory), sg.Input(gun_factor)],
+              [sg.Text(SetOfStringsClass.provide_model), sg.Input(gun_model)],
+              [sg.Text(SetOfStringsClass.provide_gun_number), sg.Input(gun_serial_number)],
               [sg.Button("Add")]
               ]
-
     window = sg.Window(SetOfStringsClass.program_name, layout, location=(0, 0), size=(400, 400))
     if added_comment:
         window.add_row(sg.Text("The gun has been added!", text_color='green'))

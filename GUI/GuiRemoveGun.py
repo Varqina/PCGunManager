@@ -65,7 +65,7 @@ def create_table_data(gun_list):
     table_data = []
     index = 1
     for gun in gun_list:
-        temporary_tab = [index, gun.get_factory(), gun.get_model(), gun.get_number()]
+        temporary_tab = [index, gun.get_factory(), gun.get_model(), gun.get_gun_serial_number()]
         table_data.append(temporary_tab)
         index += 1
     return table_data
