@@ -1,10 +1,13 @@
 import Settings
-from GUI import GuiAddGun, GuiRemoveGun, GuiMessageTextDialog
+from GUI import GuiAddGun, GuiRemoveGun, GuiMessageTextDialog, GuiEdit, GuiEditProperties
 from GunClass import GunClass
 import SetOfStringsClass
 
 
 # TODO ENUM to gun form
+
+
+
 
 class GunManagerClass:
     gun_list = []
@@ -58,21 +61,45 @@ class GunManagerClass:
         else:
             GuiMessageTextDialog.run_gui("There is no gun in the stock")
 
+    def run_gui_update_properties(self, gun):
+        new_properties = GuiEditProperties.run_gui(gun)
+        if new_properties is not None:
+            if gun.update_properties(new_properties):
+                GuiMessageTextDialog.run_gui(SetOfStringsClass.value_updated)
+            else:
+                GuiMessageTextDialog.run_gui("No changes detected")
+            self.run_gui_update_properties(gun)
+
     def edit_gun(self):
-        picked_gun = self.user_pick_gun_from_list()
-        picked_gun.get_printed_gun_property_list()
-        property_name = input(SetOfStringsClass.select_gun_property).lower()
-        new_property_value = input(SetOfStringsClass.provide_new_value)
-        if property_name == "factory": picked_gun.set_factory(new_property_value)
-        if property_name == "model": picked_gun.set_model(new_property_value)
-        if property_name == "bullets used": picked_gun.set_bullets_used_total(new_property_value)
-        if property_name == "buy date": picked_gun.set_buy_date(new_property_value)
-        if property_name == "buy price": picked_gun.set_buy_price(new_property_value)
-        if property_name == "brand new": picked_gun.set_brand_new(new_property_value)
-        if property_name == "date last cleaning": picked_gun.set_last_cleaning(new_property_value)
-        if property_name == "Gun's number": picked_gun.set_gun_serial_number(new_property_value)
-        print(SetOfStringsClass.value_updated)
-        picked_gun.get_printed_gun_property_list()
+        if Settings.gui:
+            picked_gun_serial_number = GuiEdit.run_gui(self.gun_list)
+            gun = self.get_gun_by_serial_number(picked_gun_serial_number)
+            if gun is not None:
+                self.run_gui_update_properties(gun)
+                self.edit_gun()
+        else:
+            picked_gun = self.user_pick_gun_from_list()
+            picked_gun.get_printed_gun_property_list()
+            property_name = input(SetOfStringsClass.select_gun_property).lower()
+            new_property_value = input(SetOfStringsClass.provide_new_value)
+            if property_name == "factory": picked_gun.set_factory(new_property_value)
+            if property_name == "model": picked_gun.set_model(new_property_value)
+            if property_name == "bullets used": picked_gun.set_bullets_used_total(new_property_value)
+            if property_name == "buy date": picked_gun.set_buy_date(new_property_value)
+            if property_name == "buy price": picked_gun.set_buy_price(new_property_value)
+            if property_name == "brand new": picked_gun.set_brand_new(new_property_value)
+            if property_name == "date last cleaning": picked_gun.set_last_cleaning(new_property_value)
+            if property_name == "Gun's number": picked_gun.set_gun_serial_number(new_property_value)
+            print(SetOfStringsClass.value_updated)
+            picked_gun.get_printed_gun_property_list()
+
+    def get_gun_by_serial_number(self, picked_gun_serial_number):
+        for gun in self.gun_list:
+            if gun.get_gun_serial_number() == picked_gun_serial_number:
+                return gun
+        else:
+            return None
+
 
     def display_all_with_details(self):
         index = 1
@@ -82,10 +109,13 @@ class GunManagerClass:
             index += 1
 
     def display_all(self):
-        index = 1
-        for gun in self.gun_list:
-            print(str(index) + ": " + str(gun))
-            index += 1
+        if Settings.gui:
+            GuiEdit.run_gui(self.gun_list)
+        else:
+            index = 1
+            for gun in self.gun_list:
+                print(str(index) + ": " + str(gun))
+                index += 1
 
     def add_shooting(self):
         index = 1

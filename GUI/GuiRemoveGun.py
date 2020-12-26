@@ -30,7 +30,7 @@ def run_gui(gun_list):
                 table_data.remove(picked_gun)
                 window = refresh_window(refresh_table_data(table_data), table_heading, window)
             else:
-                GuiMessageTextDialog.run_gui("You need to pick expected row")
+                GuiMessageTextDialog.run_gui("You need to pick expected gun")
         if event == "Remove":
             provided_users_index = values[2]
             if is_user_value_correct(provided_users_index) and int(provided_users_index)-1 < len(table_data):

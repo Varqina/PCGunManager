@@ -19,6 +19,9 @@ class GunClass:
         return self.factory == other.factory and self.model == other.model and \
                self.gun_serial_number == other.gun_serial_number
 
+    def __str__(self):
+        return "Gun: %s, %s, %s " % (self.factory, self.model, self.gun_serial_number)
+
     def add_shooting(self, shooting_date, shooting_place, bullets_amount):
         self.shooting[self.get_latest_used_key() + 1] = (shooting_date, shooting_place, bullets_amount)
         self.bullets_used_total += bullets_amount
@@ -50,8 +53,33 @@ class GunClass:
                 latest_key = k
         return latest_key
 
-    def __str__(self):
-        return "Gun: %s, %s, %s " % (self.factory, self.model, self.gun_serial_number)
+    def update_properties(self, property_dictionary):
+        property_changed = 0
+        if property_dictionary['factory'] != self.get_factory():
+            self.set_factory(property_dictionary['Factory'])
+            property_changed = 1
+        if property_dictionary['model'] != self.get_model():
+            self.set_model(property_dictionary['Model'])
+            property_changed = 1
+        if property_dictionary['bullets_used'] != self.get_bullets_used_total():
+            self.set_bullets_used_total(property_dictionary['Bullets used'])
+            property_changed = 1
+        if property_dictionary['buy_date'] != self.get_buy_date():
+            self.set_buy_date(property_dictionary['Buy Date'])
+            property_changed = 1
+        if property_dictionary['buy_price'] != self.get_buy_price():
+            self.set_buy_price(property_dictionary['Buy Price'])
+            property_changed = 1
+        if property_dictionary['brand_new'] != self.get_brand_new():
+            self.set_brand_new(property_dictionary['Brand New'])
+            property_changed = 1
+        if property_dictionary['cleaning_date'] != self.get_last_cleaning():
+            self.set_last_cleaning(property_dictionary['Cleaning date'])
+            property_changed = 1
+        if property_dictionary['serial_number'] != self.get_gun_serial_number():
+            self.set_gun_serial_number(property_dictionary['serial_number'])
+            property_changed = 1
+        return True if property_changed == 1 else False
 
     def get_shooting(self):
         return self.shooting

@@ -3,9 +3,6 @@ import PySimpleGUI as sg
 import SetOfStringsClass
 from GUI import GuiMessageTextDialog
 
-# TODO Add Photo
-
-
 '''Variable initialization'''
 add_gun_output = ' '
 color = 'green'
@@ -92,7 +89,6 @@ class ErrorValue:
         return self.error_list
 
     def get_error_status(self):
-        print(self.error_list)
         if len(self.error_list) != 0:
             self.error_status = True
         return self.error_status
