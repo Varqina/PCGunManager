@@ -45,8 +45,6 @@ def run_gui(added_comment=False, already_in_database=False, gun=None):
             values = None
             break
     window.close()
-    print("zwaracam1")
-    print(values)
     return values
 
 

@@ -6,6 +6,7 @@ from GUI import GuiMessageTextDialog
 
 # TODO search
 # TODO Resize and aligment
+# TODO columChosser
 
 def run_gui(gun_list):
     sg.theme('DarkAmber')

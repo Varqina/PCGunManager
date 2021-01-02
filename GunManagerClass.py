@@ -74,7 +74,6 @@ class GunManagerClass:
         if Settings.gui:
             picked_gun_serial_number = GuiEdit.run_gui(self.gun_list)
             gun = self.get_gun_by_serial_number(picked_gun_serial_number)
-            print(gun)
             if gun is not None:
                 self.run_gui_update_properties(gun)
                 self.edit_gun()
