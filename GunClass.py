@@ -56,25 +56,25 @@ class GunClass:
     def update_properties(self, property_dictionary):
         property_changed = 0
         if property_dictionary['factory'] != self.get_factory():
-            self.set_factory(property_dictionary['Factory'])
+            self.set_factory(property_dictionary['factory'])
             property_changed = 1
         if property_dictionary['model'] != self.get_model():
-            self.set_model(property_dictionary['Model'])
+            self.set_model(property_dictionary['model'])
             property_changed = 1
         if property_dictionary['bullets_used'] != self.get_bullets_used_total():
-            self.set_bullets_used_total(property_dictionary['Bullets used'])
+            self.set_bullets_used_total(property_dictionary['bullets_used'])
             property_changed = 1
         if property_dictionary['buy_date'] != self.get_buy_date():
-            self.set_buy_date(property_dictionary['Buy Date'])
+            self.set_buy_date(property_dictionary['buy_date'])
             property_changed = 1
         if property_dictionary['buy_price'] != self.get_buy_price():
-            self.set_buy_price(property_dictionary['Buy Price'])
+            self.set_buy_price(property_dictionary['buy_price'])
             property_changed = 1
         if property_dictionary['brand_new'] != self.get_brand_new():
-            self.set_brand_new(property_dictionary['Brand New'])
+            self.set_brand_new(property_dictionary['brand_new'])
             property_changed = 1
         if property_dictionary['cleaning_date'] != self.get_last_cleaning():
-            self.set_last_cleaning(property_dictionary['Cleaning date'])
+            self.set_last_cleaning(property_dictionary['cleaning_date'])
             property_changed = 1
         if property_dictionary['serial_number'] != self.get_gun_serial_number():
             self.set_gun_serial_number(property_dictionary['serial_number'])

@@ -21,8 +21,8 @@ def run_gui(gun_list):
             run_search(search_value)
         if event == "Edit":
             table_of_lists = values[1]
-            index_of_selected_list = table_of_lists[0]
             if len(table_of_lists) > 0:
+                index_of_selected_list = table_of_lists[0]
                 picked_index = int(index_of_selected_list)
                 picked_gun = table_data[picked_index]
                 picked_gun_serial_number = picked_gun[3]
@@ -30,6 +30,7 @@ def run_gui(gun_list):
             else:
                 GuiMessageTextDialog.run_gui("You need to pick expected gun")
         if event == sg.WIN_CLOSED or event == "Back":
+            picked_gun_serial_number = None
             break
         if len(table_data) == 0:
             GuiMessageTextDialog.run_gui("There are no guns")

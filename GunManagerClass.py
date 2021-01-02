@@ -62,7 +62,7 @@ class GunManagerClass:
             GuiMessageTextDialog.run_gui("There is no gun in the stock")
 
     def run_gui_update_properties(self, gun):
-        new_properties = GuiEditProperties.run_gui(gun)
+        new_properties = GuiEditProperties.run_gui(gun=gun)
         if new_properties is not None:
             if gun.update_properties(new_properties):
                 GuiMessageTextDialog.run_gui(SetOfStringsClass.value_updated)
@@ -74,6 +74,7 @@ class GunManagerClass:
         if Settings.gui:
             picked_gun_serial_number = GuiEdit.run_gui(self.gun_list)
             gun = self.get_gun_by_serial_number(picked_gun_serial_number)
+            print(gun)
             if gun is not None:
                 self.run_gui_update_properties(gun)
                 self.edit_gun()
