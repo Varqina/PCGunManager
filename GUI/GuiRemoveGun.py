@@ -23,8 +23,8 @@ def run_gui(gun_list):
             table_of_lists = values[1]
             index_of_selected_list = table_of_lists[0]
             if len(table_of_lists) > 0:
-                picked_index = int(index_of_selected_list)
-                picked_gun = table_data[picked_index]
+                picked_index_as_int = int(index_of_selected_list)
+                picked_gun = table_data[picked_index_as_int]
                 picked_gun_serial_number = picked_gun[3]
                 numbers_of_picked_guns.append(picked_gun_serial_number)
                 table_data.remove(picked_gun)
@@ -34,8 +34,8 @@ def run_gui(gun_list):
         if event == "Remove":
             provided_users_index = values[2]
             if is_user_value_correct(provided_users_index) and int(provided_users_index)-1 < len(table_data):
-                picked_index = int(provided_users_index) -1
-                picked_gun = table_data[picked_index]
+                picked_index_as_int = int(provided_users_index) -1
+                picked_gun = table_data[picked_index_as_int]
                 picked_gun_serial_number = picked_gun[3]
                 numbers_of_picked_guns.append(picked_gun_serial_number)
                 table_data.remove(picked_gun)

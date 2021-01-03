@@ -14,7 +14,7 @@ gun_serial_number = 'Gun Serial Number'
 def run_gui(added_comment=False, already_in_database=False, gun=None):
     global gun_factor, gun_model, gun_serial_number, color, add_gun_output
     sg.theme('DarkAmber')
-    '''Update variable according to parameters'''
+    #Update variable according to parameters in method invoke
     if added_comment:
         add_gun_output = "The gun has been added!"
     if already_in_database:
@@ -51,13 +51,13 @@ def run_gui(added_comment=False, already_in_database=False, gun=None):
 def is_value_correct(input_value):
     error_value = ErrorValue()
     forbidden_characters_tuple = " "
-    input_value = str(input_value)
+    input_value_as_string = str(input_value)
     #properties cannot be empty anymore
     if len(input_value) == 0:
         error_value.set_error_list("empty value")
         return error_value
     for character in forbidden_characters_tuple:
-        if character in input_value:
+        if character in input_value_as_string:
             if character == " ":
                 character = "space"
             error_value.set_error_list(character)
@@ -66,12 +66,12 @@ def is_value_correct(input_value):
 
 def verify_value(values):
     issue_exists = 0
-    for value in values:
-        tested_value = is_value_correct(value)
+    for key in values:
+        tested_value = values[key]
+        value_verification = is_value_correct(tested_value)
         #if string has any incorrect value it will return pop-up window
-        if tested_value.get_error_status():
-            GuiMessageTextDialog.run_gui("Value '%s' is incorrect. Please don't use %s in %s"
-                                         % (value, tested_value.get_error_list_as_string(), gun_factor))
+        if value_verification.get_error_status():
+            GuiMessageTextDialog.run_gui(f"""Value "{tested_value}" is incorrect. Please don't use {value_verification.get_error_list_as_string()} in {key}""")
             issue_exists = 1
     return True if issue_exists == 0 else False
 
@@ -80,6 +80,8 @@ class ErrorValue:
     def __init__(self):
         self.error_list = []
         self.error_status = False
+
+
 
     def get_error_list(self):
         return self.error_list

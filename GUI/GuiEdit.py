@@ -24,8 +24,8 @@ def run_gui(gun_list):
             table_of_lists = values[1]
             if len(table_of_lists) > 0:
                 index_of_selected_list = table_of_lists[0]
-                picked_index = int(index_of_selected_list)
-                picked_gun = table_data[picked_index]
+                picked_index_as_int = int(index_of_selected_list)
+                picked_gun = table_data[picked_index_as_int]
                 picked_gun_serial_number = picked_gun[3]
                 break
             else:

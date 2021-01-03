@@ -9,7 +9,7 @@ color = 'green'
 gun_factor = 'Gun Factory'
 gun_model = 'Gun Model'
 gun_serial_number = 'Gun Serial Number'
-
+# TODO Extend Properties button
 
 def run_gui(added_comment=False, already_in_database=False, gun=None):
     global gun_factor, gun_model, gun_serial_number, color, add_gun_output

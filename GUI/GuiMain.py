@@ -2,9 +2,6 @@ import PySimpleGUI as sg
 
 import SetOfStringsClass
 
-# todo serializacja
-# todo load application
-
 def run_gui(gun_manager):
     sg.theme('DarkAmber')
     layout = [[sg.Text(SetOfStringsClass.add_gun_to_the_stock), sg.Button('Add')],
