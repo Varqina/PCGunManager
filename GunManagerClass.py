@@ -1,4 +1,6 @@
+
 import Settings
+from ColumnChoicerManagerClass import ColumnChoicerManagerClass
 from GUI import GuiAddGun, GuiRemoveGun, GuiMessageTextDialog, GuiEdit, GuiEditProperties
 from GunClass import GunClass
 import SetOfStringsClass
@@ -6,11 +8,9 @@ import SetOfStringsClass
 
 # TODO ENUM to gun form
 
-
-
-
 class GunManagerClass:
     gun_list = []
+    columnChoicer = ColumnChoicerManagerClass()
 
     def __eq__(self, other):
         return self.gun_list == other.gun_list
@@ -70,9 +70,16 @@ class GunManagerClass:
                 GuiMessageTextDialog.run_gui("No changes detected")
             self.run_gui_update_properties(gun)
 
+
+    def run_update_properties(self):
+        pass
+
     def edit_gun(self):
         if Settings.gui:
-            picked_gun_serial_number = GuiEdit.run_gui(self.gun_list)
+            picked_gun_serial_number = GuiEdit.run_gui(self.gun_list, column_choicer=self.columnChoicer)
+            #be ready to for each colum choiser invoke
+            while picked_gun_serial_number == 'refresh':
+                picked_gun_serial_number = GuiEdit.run_gui(self.gun_list, column_choicer=self.columnChoicer)
             gun = self.get_gun_by_serial_number(picked_gun_serial_number)
             if gun is not None:
                 self.run_gui_update_properties(gun)
