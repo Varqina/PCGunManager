@@ -10,7 +10,8 @@ import SetOfStringsClass
 
 class GunManagerClass:
     gun_list = []
-    columnChoicer = ColumnChoicerManagerClass()
+    columnChoicerEdit = ColumnChoicerManagerClass()
+    columnChoicerRemove = ColumnChoicerManagerClass()
 
     def __eq__(self, other):
         return self.gun_list == other.gun_list
@@ -49,7 +50,10 @@ class GunManagerClass:
     def remove_gun(self):
         if len(self.gun_list) != 0:
             if Settings.gui:
-                guns_to_be_removed = GuiRemoveGun.run_gui(self.gun_list)
+                guns_to_be_removed = GuiRemoveGun.run_gui(self.gun_list, column_choicer_remove=self.columnChoicerRemove)
+                while guns_to_be_removed == 'refresh':
+                    guns_to_be_removed = GuiRemoveGun.run_gui(self.gun_list,
+                                                              column_choicer_remove=self.columnChoicerRemove)
             else:
                 guns_to_be_removed = input(SetOfStringsClass.provide_gun_number)
             if guns_to_be_removed is not None:
@@ -76,10 +80,10 @@ class GunManagerClass:
 
     def edit_gun(self):
         if Settings.gui:
-            picked_gun_serial_number = GuiEdit.run_gui(self.gun_list, column_choicer=self.columnChoicer)
+            picked_gun_serial_number = GuiEdit.run_gui(self.gun_list, column_choicer_edit=self.columnChoicerEdit)
             #be ready to for each colum choiser invoke
             while picked_gun_serial_number == 'refresh':
-                picked_gun_serial_number = GuiEdit.run_gui(self.gun_list, column_choicer=self.columnChoicer)
+                picked_gun_serial_number = GuiEdit.run_gui(self.gun_list, column_choicer_edit=self.columnChoicerEdit)
             gun = self.get_gun_by_serial_number(picked_gun_serial_number)
             if gun is not None:
                 self.run_gui_update_properties(gun)

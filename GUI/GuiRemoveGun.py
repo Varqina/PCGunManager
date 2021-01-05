@@ -1,16 +1,16 @@
 import PySimpleGUI as sg
 
 import SetOfStringsClass
-from GUI import GuiMessageTextDialog
+from GUI import GuiMessageTextDialog, GuiColumnChoicer
 
 
 # TODO search
 # TODO Resize and aligment
 
-def run_gui(gun_list):
+def run_gui(gun_list, column_choicer_remove):
     sg.theme('DarkAmber')
-    table_heading = ['index', 'factory', 'model', 'serial number']
-    table_data = create_table_data(gun_list)
+    table_heading = column_choicer_remove.get_table_heading()
+    table_data = create_table_data(gun_list, column_choicer_remove)
     window = create_window(table_data, heading=table_heading)
     numbers_of_picked_guns = []
 
@@ -19,6 +19,12 @@ def run_gui(gun_list):
         if event == "Search":
             search_value = values[0]
             run_search(search_value)
+        if event == "Column Choicer":
+            column_property_choicer_as_dictionary = GuiColumnChoicer.run_gui(column_choicer_remove)
+            column_choicer_remove.set_new_checkbox_value(column_property_choicer_as_dictionary)
+            # it will use refresh to refresh window and get updated table
+            numbers_of_picked_guns = 'refresh'
+            break
         if event == "Delete":
             table_of_lists = values[1]
             index_of_selected_list = table_of_lists[0]
@@ -49,7 +55,6 @@ def run_gui(gun_list):
             break
 
     window.close()
-    print(numbers_of_picked_guns)
     return numbers_of_picked_guns
 
 
@@ -61,11 +66,14 @@ def refresh_table_data(table_data):
     return table_data
 
 
-def create_table_data(gun_list):
+def create_table_data(gun_list, column_choicer):
     table_data = []
     index = 1
     for gun in gun_list:
-        temporary_tab = [index, gun.get_factory(), gun.get_model(), gun.get_gun_serial_number()]
+        if column_choicer is None:
+            temporary_tab = [index, gun.get_factory(), gun.get_model(), gun.get_gun_serial_number()]
+        else:
+            temporary_tab = column_choicer.get_row_with_selected_properties(index, gun)
         table_data.append(temporary_tab)
         index += 1
     return table_data
@@ -87,6 +95,7 @@ def refresh_window(table_data, heading, window=None, first_invoke=False):
     if not first_invoke:
         window.close()
     layout = [[sg.Input("Write gun here"), sg.Button("Search")],
+              [sg.Button("Column Choicer")],
               [sg.Table(values=table_data, auto_size_columns=True, headings=heading), sg.Button('Delete')],
               [sg.Text(SetOfStringsClass.choice_gun), sg.Input('0', size=(3, 1))],
               [sg.Button("Remove"), sg.Button("Back")]

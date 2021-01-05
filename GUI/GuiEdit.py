@@ -1,6 +1,4 @@
 import PySimpleGUI as sg
-
-import ColumnChoicerManagerClass
 import SetOfStringsClass
 from GUI import GuiMessageTextDialog, GuiColumnChoicer
 
@@ -10,10 +8,10 @@ from GUI import GuiMessageTextDialog, GuiColumnChoicer
 
 
 
-def run_gui(gun_list, column_choicer=None):
+def run_gui(gun_list, column_choicer_edit):
     sg.theme('DarkAmber')
-    table_heading = column_choicer.get_table_heading()
-    table_data = create_table_data(gun_list, column_choicer)
+    table_heading = column_choicer_edit.get_table_heading()
+    table_data = create_table_data(gun_list, column_choicer_edit)
     window = create_window(table_data, heading=table_heading)
     picked_gun_serial_number = ""
 
@@ -33,8 +31,8 @@ def run_gui(gun_list, column_choicer=None):
             else:
                 GuiMessageTextDialog.run_gui("You need to pick expected gun")
         if event == "Column Choicer":
-            column_property_choicer_as_dictionary = GuiColumnChoicer.run_gui(column_choicer)
-            column_choicer.set_new_checkbox_value(column_property_choicer_as_dictionary)
+            column_property_choicer_as_dictionary = GuiColumnChoicer.run_gui(column_choicer_edit)
+            column_choicer_edit.set_new_checkbox_value(column_property_choicer_as_dictionary)
             #it will use refresh to refresh window and get updated table
             picked_gun_serial_number = 'refresh'
             break
