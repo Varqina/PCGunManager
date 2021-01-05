@@ -11,6 +11,7 @@ class ColumnChoicerManagerClass:
     last_cleaning = False
     gun_serial_number = True
 
+
     def get_table_heading(self):
         # ['index', 'factory', 'model', 'serial number']
         heading = ['index']
@@ -85,15 +86,16 @@ class ColumnChoicerManagerClass:
     def set_factory_checkbox_status(self, factory):
         self.factory = factory
 
-    def set_new_checkbox_value(self, values):
-        self.factory = values['factory']
-        self.model = values['model']
-        self.gun_serial_number = values['gun_serial_number']
-        self.bullets_used_total = values['bullets_used_total']
-        self.buy_date = values['buy_date']
-        self.buy_price = values['buy_price']
-        self.brand_new = values['brand_new']
-        self.last_cleaning = values['last_cleaning']
+    def set_properties_data(self, value_dictionary):
+        if len(value_dictionary) != 0:
+            self.factory = value_dictionary['factory']
+            self.model = value_dictionary['model']
+            self.gun_serial_number = value_dictionary['gun_serial_number']
+            self.bullets_used_total = value_dictionary['bullets_used_total']
+            self.buy_date = value_dictionary['buy_date']
+            self.buy_price = value_dictionary['buy_price']
+            self.brand_new = value_dictionary['brand_new']
+            self.last_cleaning = value_dictionary['last_cleaning']
         # save to file
 
     def get_values_as_dictionary(self):
@@ -106,7 +108,3 @@ class ColumnChoicerManagerClass:
                       'brand_new': self.get_brand_new_checkbox_status(),
                       'last_cleaning': self.get_last_cleaning_checkbox_status()}
         return dictionary
-
-
-def get_user_properties():
-    GuiColumnChoicer.run_gui()

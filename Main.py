@@ -2,11 +2,13 @@ import Settings
 import SetOfStringsClass
 from GUI import GuiMain
 from GunManagerClass import GunManagerClass
-from SaveAndLoad import save_application_data, load_application_data, create_backup_file, get_latest_backup
-
+from SaveAndLoad import save_application_data, load_application_data
 gun_manager = GunManagerClass()
-gun_manager.set_gun_list(load_application_data())
 
+# TODO object to handle it
+gun_manager.set_gun_list(load_application_data(SetOfStringsClass.database_gun_list_file))
+gun_manager.columnChoicerRemove.set_properties_data(load_application_data(SetOfStringsClass.database_choicer_remove_file))
+gun_manager.columnChoicerEdit.set_properties_data(load_application_data(SetOfStringsClass.database_choicer_edit_file))
 
 if Settings.gui:
     GuiMain.run_gui(gun_manager)
@@ -35,5 +37,9 @@ else:
                 pass
         if choice == 6:
             break
-save_application_data(gun_manager.get_gun_list())
+
+# TODO object to handle it
+save_application_data(gun_manager.get_gun_list(), SetOfStringsClass.database_gun_list_file, backup=True)
+save_application_data(gun_manager.columnChoicerRemove.get_values_as_dictionary(), SetOfStringsClass.database_choicer_remove_file)
+save_application_data(gun_manager.columnChoicerEdit.get_values_as_dictionary(), SetOfStringsClass.database_choicer_edit_file)
 #Save Data

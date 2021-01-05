@@ -32,7 +32,7 @@ def run_gui(gun_list, column_choicer_edit):
                 GuiMessageTextDialog.run_gui("You need to pick expected gun")
         if event == "Column Choicer":
             column_property_choicer_as_dictionary = GuiColumnChoicer.run_gui(column_choicer_edit)
-            column_choicer_edit.set_new_checkbox_value(column_property_choicer_as_dictionary)
+            column_choicer_edit.set_properties_data(column_property_choicer_as_dictionary)
             #it will use refresh to refresh window and get updated table
             picked_gun_serial_number = 'refresh'
             break

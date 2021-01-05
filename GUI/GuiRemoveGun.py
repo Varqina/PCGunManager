@@ -21,7 +21,7 @@ def run_gui(gun_list, column_choicer_remove):
             run_search(search_value)
         if event == "Column Choicer":
             column_property_choicer_as_dictionary = GuiColumnChoicer.run_gui(column_choicer_remove)
-            column_choicer_remove.set_new_checkbox_value(column_property_choicer_as_dictionary)
+            column_choicer_remove.set_properties_data(column_property_choicer_as_dictionary)
             # it will use refresh to refresh window and get updated table
             numbers_of_picked_guns = 'refresh'
             break

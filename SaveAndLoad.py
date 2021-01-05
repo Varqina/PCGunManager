@@ -8,7 +8,6 @@ current_path = os.path.dirname(os.path.realpath(__file__))
 database_directory_name = 'database'
 database_directory = os.path.join(current_path, database_directory_name)
 save_file = 'gun_list.obj'
-database_file = os.path.join(database_directory, save_file)
 backup_directory_name = 'backup'
 backup_directory = os.path.join(current_path, backup_directory_name)
 
@@ -16,19 +15,21 @@ backup_directory = os.path.join(current_path, backup_directory_name)
 #TODO pywinauto tests
 
 
-def save_application_data(gun_list):
+def save_application_data(data, file_name, backup=False):
     create_directory(database_directory)
-    gun_list_file = open(database_file, 'wb')
-    pickle.dump(gun_list, gun_list_file)
-    gun_list_file.close()
-    create_backup_file(gun_list)
+    data_file = open(os.path.join(database_directory, file_name), 'wb')
+    pickle.dump(data, data_file)
+    data_file.close()
+    if backup:
+        create_backup_file(data, file_name)
 
 
-def load_application_data():
+def load_application_data(file_name):
+    database_file = os.path.join(database_directory, file_name)
     if os.path.exists(database_file):
-        gun_list_file = open(database_file, 'rb')
-        gun_list = pickle.load(gun_list_file)
-        return gun_list
+        data_file = open(database_file, 'rb')
+        data = pickle.load(data_file)
+        return data
     else:
         return []
 
@@ -84,7 +85,8 @@ def clear_backup_directory():
         os.remove(get_oldest_backup())
 
 
-def create_backup_file(gun_list):
+def create_backup_file(gun_list, file_name):
+    database_file = os.path.join(database_directory, file_name)
     current_date = datetime.now().strftime("%Y%m%d%H%M%S")
     backup_file_name = current_date + ".obj"
     backup_file = os.path.join(backup_directory, backup_file_name)

@@ -33,3 +33,6 @@ add_date = """Please provide date in format dd-mm-yyyy"""
 add_shooting_place = """Please provide shooting place"""
 add_used_bullets = """Please provide used bullets"""
 no_shooting_available = """We are sorry but there is no shooting which meets your query"""
+database_gun_list_file = 'gun_list.obj'
+database_choicer_edit_file = 'choice_edit.prop'
+database_choicer_remove_file = 'choice_remove.prop'

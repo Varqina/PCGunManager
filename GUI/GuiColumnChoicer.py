@@ -24,7 +24,7 @@ def run_gui(columnChoicerManager):
         event, values = window.read()
         # {'factory': True, 'model': False, 'gun_serial_number': False}
         if event == "OK":
-            columnChoicerManager.set_new_checkbox_value(values)
+            columnChoicerManager.set_properties_data(values)
             break
         if event == sg.WIN_CLOSED or 'Exit':
             #it needs to return object with default values
