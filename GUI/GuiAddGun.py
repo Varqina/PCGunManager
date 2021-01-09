@@ -9,6 +9,8 @@ color = 'green'
 gun_factor = 'Gun Factory'
 gun_model = 'Gun Model'
 gun_serial_number = 'Gun Serial Number'
+
+
 # TODO Extend Properties button
 
 def run_gui(added_comment=False, already_in_database=False, gun=None):
@@ -38,7 +40,7 @@ def run_gui(added_comment=False, already_in_database=False, gun=None):
         if event == "Add":
             if verify_value(values):
                 break
-        if event == sg.WIN_CLOSED or 'Exit':
+        if event == sg.WIN_CLOSED or event == 'Exit':
             values = None
             break
     window.close()
