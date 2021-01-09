@@ -1,7 +1,7 @@
 class GunClass:
     factory = None
     model = None
-    bullets_used_total = 0
+    bullets_used = 0
     buy_date = None
     buy_price = 0
     brand_new = None
@@ -11,6 +11,7 @@ class GunClass:
     shooting = {}  # key - int, value = [date of training/shooting, place, ammo used]
 
     def __init__(self, factory, model, gun_serial_number):
+        super().__init__()
         self.factory = factory
         self.model = model
         self.gun_serial_number = gun_serial_number
@@ -22,12 +23,17 @@ class GunClass:
     def __str__(self):
         return "Gun: %s, %s, %s " % (self.factory, self.model, self.gun_serial_number)
 
+    def asdict(self):
+        return {'factory': self.factory, 'model': self.model, 'used_bullets': self.bullets_used,
+                'buy_date': self.buy_date, 'buy_price': self.buy_price, 'brand_new': self.brand_new,
+                'last_cleaning': self.last_cleaning, 'gun_serial_number': self.gun_serial_number}
+
     def add_shooting(self, shooting_date, shooting_place, bullets_amount):
         self.shooting[self.get_latest_used_key() + 1] = (shooting_date, shooting_place, bullets_amount)
-        self.bullets_used_total += bullets_amount
+        self.bullets_used += bullets_amount
 
     def remove_shooting(self, shooting_index):
-        self.bullets_used_total -= self.shooting.get(shooting_index).__getitem__(1)
+        self.bullets_used -= self.shooting.get(shooting_index).__getitem__(1)
         del self.shooting[shooting_index]
 
     def print_shooting_date(self):
@@ -37,7 +43,7 @@ class GunClass:
     def get_printed_gun_property_list(self):
         print("Factory: " + self.get_factory())
         print("Model: " + self.get_model())
-        print("Bullets used: " + str(self.get_bullets_used_total()))
+        print("Bullets used: " + str(self.get_bullets_used()))
         print("Buy Date: " + str(self.get_buy_date()))
         print("Buy price: " + str(self.get_buy_price()))
         print("Brand new: " + str(self.get_brand_new()))
@@ -61,7 +67,7 @@ class GunClass:
         if property_dictionary['model'] != self.get_model():
             self.set_model(property_dictionary['model'])
             property_changed = 1
-        if property_dictionary['bullets_used'] != self.get_bullets_used_total():
+        if property_dictionary['bullets_used'] != self.get_bullets_used():
             self.set_bullets_used_total(property_dictionary['bullets_used'])
             property_changed = 1
         if property_dictionary['buy_date'] != self.get_buy_date():
@@ -90,8 +96,8 @@ class GunClass:
     def get_model(self):
         return self.model
 
-    def get_bullets_used_total(self):
-        return self.bullets_used_total
+    def get_bullets_used(self):
+        return self.bullets_used
 
     def get_buy_date(self):
         return self.buy_date
@@ -115,7 +121,7 @@ class GunClass:
         self.factory = model
 
     def set_bullets_used_total(self, bullets_used_total):
-        self.bullets_used_total = bullets_used_total
+        self.bullets_used = bullets_used_total
 
     def set_buy_date(self, buy_date):
         self.buy_date = buy_date

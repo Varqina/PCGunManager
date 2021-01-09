@@ -26,12 +26,12 @@ def run_gui(added_comment=False, already_in_database=False, gun=None):
     layout = [[sg.Text('Model'), sg.Input(gun.get_factory(), key='model')],
               [sg.Text('Factory'), sg.Input(gun.get_model(), key='factory')],
               [sg.Text('Serial number'), sg.Input(gun.get_gun_serial_number(), key='serial_number')],
-              [sg.Text('Bullets used'), sg.Input(gun.get_bullets_used_total(), key='bullets_used')],
+              [sg.Text('Bullets used'), sg.Input(gun.get_bullets_used(), key='bullets_used')],
               [sg.Text('Buy date'), sg.Input(gun.get_buy_date(), key='buy_date')],
               [sg.Text('Buy price'), sg.Input(gun.get_buy_price(), key="buy_price")],
               [sg.Text('Brand new'), sg.Input(gun.get_brand_new(), key="brand_new")],
               [sg.Text('Cleaning date'), sg.Input(gun.get_brand_new(), key="cleaning_date")],
-              [sg.Button("Save"), sg.Button("Exit")],
+              [sg.Button("Save"), sg.Button("Back")],
               [sg.Text(add_gun_output, text_color=color)]
               ]
     window = sg.Window(SetOfStringsClass.program_name, layout, location=(0, 0), size=(400, 400),

@@ -48,6 +48,7 @@ class GunManagerClass:
         return False
 
     def remove_gun(self):
+        # TODO dziedziczenie po sobie
         if len(self.gun_list) != 0:
             if Settings.gui:
                 guns_to_be_removed = GuiRemoveGun.run_gui(self.gun_list, column_choicer_remove=self.columnChoicerRemove)
@@ -79,12 +80,21 @@ class GunManagerClass:
         pass
 
     def edit_gun(self):
+        # TODO export to Json
         if Settings.gui:
-            picked_gun_serial_number = GuiEdit.run_gui(self.gun_list, column_choicer_edit=self.columnChoicerEdit)
+            gui_respond = GuiEdit.run_gui(self.gun_list, column_choicer_edit=self.columnChoicerEdit)
             #be ready to for each colum choiser invoke
-            while picked_gun_serial_number == 'refresh':
-                picked_gun_serial_number = GuiEdit.run_gui(self.gun_list, column_choicer_edit=self.columnChoicerEdit)
-            gun = self.get_gun_by_serial_number(picked_gun_serial_number)
+            while gui_respond[0]:
+                if gui_respond[1] != 'gun_list':
+                    gun_list = gui_respond[1]
+                else:
+                    gun_list = self.gun_list
+                gui_respond = GuiEdit.run_gui(gun_list, column_choicer_edit=self.columnChoicerEdit)
+            #to avoid inedx our of range
+            if len(gui_respond) > 2:
+                gun = self.get_gun_by_serial_number(gui_respond[2])
+            else:
+                gun = None
             if gun is not None:
                 self.run_gui_update_properties(gun)
                 self.edit_gun()

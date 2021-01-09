@@ -31,7 +31,7 @@ class ColumnChoicerManagerClass:
         if self.factory: row_tab.append(gun.get_factory())
         if self.model: row_tab.append(gun.get_model())
         if self.gun_serial_number: row_tab.append(gun.get_gun_serial_number())
-        if self.bullets_used_total: row_tab.append(gun.get_bullets_used_total())
+        if self.bullets_used_total: row_tab.append(gun.get_bullets_used())
         if self.buy_date: row_tab.append(gun.get_buy_date())
         if self.buy_price: row_tab.append(gun.get_buy_price())
         if self.brand_new: row_tab.append(gun.get_brand_new())
