@@ -13,7 +13,6 @@ from Search import run_search
 def change_dictionary_list_into_gun_list(gun_list_as_dictionary_list):
     # Todo przeniesc do glownego programu nie w gui
     gun_list = []
-    print(gun_list_as_dictionary_list[0])
     for element in gun_list_as_dictionary_list:
         # tutaj przychodzi caly czas pierdolony slownik
         #print(element.get_bullets_used()) AttributeError: 'dict' object has no attribute 'get_bullets_used'
@@ -35,12 +34,11 @@ def run_gui(gun_list, column_choicer_edit):
     gui_respond = [False, 'gun_list']
 
     while True:
-        print(table_heading)
         event, values = window.read()
-
         if event == "Search":
             search_value = values[0]
             search_gun_list = run_search(search_value, gun_list)
+            print(search_gun_list)
             #search_gun_list = change_dictionary_list_into_gun_list(gun_list_as_dictionary_list)
             gui_respond[0] = True
             gui_respond[1] = search_gun_list
