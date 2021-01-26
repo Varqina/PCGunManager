@@ -104,12 +104,27 @@ def create_window(table_data, heading, first_invoke=True):
 
 
 def refresh_window(table_data, heading, window=None, first_invoke=False):
+    window_y_location = 700
+    window_x_location = 500
+    window_height = 70
+    window_width = 100
+    button_size = (15, 1)
+    print(heading)
+    input_size = (len(heading) * 13)
     if not first_invoke:
         window.close()
-    layout = [[sg.Input("Write gun here"), sg.Button("Search")],
-              [sg.Button("Column Choicer")],
-              [sg.Table(values=table_data, auto_size_columns=True, headings=heading), sg.Button('Edit')],
-              [sg.Button("Back")]
+    col_button = [[sg.Button('Edit', size=button_size)],
+                  [sg.Button("Export to Json", size=button_size)]]
+    col_mid = [[sg.Column([[sg.Button("Column Choicer", size=button_size)]])],
+               [sg.Table(values=table_data, headings=heading)]
+               ]
+    layout = [[sg.Input("Write gun here", size=(input_size, 1), justification='left'),
+               sg.Column([[sg.Button("Search", size=button_size)]], justification='right')],
+              [sg.Column(col_mid, element_justification='center', justification='left'),
+               sg.Column(col_button, justification='right')],
+              [sg.Column([[sg.Button("Back",size=button_size)]], justification='right')]
               ]
-    window = sg.Window(SetOfStringsClass.program_name, layout, location=(0, 0), element_justification='right')
+    window = sg.Window(SetOfStringsClass.program_name, layout, location=(window_y_location, window_x_location),
+                       default_element_size=(window_height, window_width), element_justification='left')
+
     return window

@@ -1,4 +1,3 @@
-
 import Settings
 from ColumnChoicerManagerClass import ColumnChoicerManagerClass
 from GUI import GuiAddGun, GuiRemoveGun, GuiMessageTextDialog, GuiEdit, GuiEditProperties
@@ -43,7 +42,7 @@ class GunManagerClass:
 
     def check_if_gun_exists_in_database(self, gun_to_be_added):
         for gun in self.gun_list:
-            if gun.get_gun_serial_number() == gun_to_be_added.get_gun_serial_number() :
+            if gun.get_gun_serial_number() == gun_to_be_added.get_gun_serial_number():
                 return True
         return False
 
@@ -75,7 +74,6 @@ class GunManagerClass:
                 GuiMessageTextDialog.run_gui("No changes detected")
             self.run_gui_update_properties(gun)
 
-
     def run_update_properties(self):
         pass
 
@@ -83,14 +81,14 @@ class GunManagerClass:
         # TODO export to Json
         if Settings.gui:
             gui_respond = GuiEdit.run_gui(self.gun_list, column_choicer_edit=self.columnChoicerEdit)
-            #be ready to for each colum choiser invoke
+            # be ready to for each colum choiser invoke
             while gui_respond[0]:
                 if gui_respond[1] != 'gun_list':
                     gun_list = gui_respond[1]
                 else:
                     gun_list = self.gun_list
                 gui_respond = GuiEdit.run_gui(gun_list, column_choicer_edit=self.columnChoicerEdit)
-            #to avoid inedx our of range
+            # to avoid inedx our of range
             if len(gui_respond) > 2:
                 gun = self.get_gun_by_serial_number(gui_respond[2])
             else:
@@ -120,7 +118,6 @@ class GunManagerClass:
                 return gun
         else:
             return None
-
 
     def display_all_with_details(self):
         index = 1

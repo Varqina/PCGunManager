@@ -11,7 +11,6 @@ class ColumnChoicerManagerClass:
     last_cleaning = False
     gun_serial_number = True
 
-
     def get_table_heading(self):
         # ['index', 'factory', 'model', 'serial number']
         heading = ['index']
